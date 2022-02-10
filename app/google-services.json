@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "853440959977",
+    "project_id": "gridview-image-picker",
+    "storage_bucket": "gridview-image-picker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853440959977:android:35d47f2b5418da25632778",
+        "android_client_info": {
+          "package_name": "com.gridviewimagepicker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853440959977-28liu5gjl1tfvj3ba0ulpav6hn4s0i47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIFtnLmWrDusMHkHuXu87OdC79wSSe1L8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853440959977-28liu5gjl1tfvj3ba0ulpav6hn4s0i47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

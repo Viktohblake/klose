@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GridView ImagePicker</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="view_uploads">View Uploads</string>
+</resources>
