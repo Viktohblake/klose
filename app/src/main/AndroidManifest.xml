@@ -25,6 +25,9 @@
         <activity
             android:exported="true"
             android:name=".GridviewActivity"/>
+        <activity
+            android:exported="true"
+            android:name=".pager.PagerHome"/>
     </application>
 
 </manifest>

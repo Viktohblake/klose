@@ -1,0 +1,41 @@
+package com.gridviewimagepicker.pager;
+
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+import com.gridviewimagepicker.R;
+
+public class PagerHome extends AppCompatActivity {
+
+    ViewPager viewPager;
+    TabLayout tabLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pager);
+
+        // setting up the adapter
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+
+        viewPager = findViewById(R.id.viewpager);
+
+        // add the fragments
+        pagerAdapter.add(new ImagePage(), "Image");
+        pagerAdapter.add(new VideoPage(), "Video");
+
+        // Set the adapter
+        viewPager.setAdapter(pagerAdapter);
+
+        // The Page (fragment) titles will be displayed in the
+        // tabLayout hence we need to  set the page viewer
+        // we use the setupWithViewPager().
+        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+}

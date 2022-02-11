@@ -1,7 +1,6 @@
 package com.gridviewimagepicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -20,17 +19,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.gridviewimagepicker.pager.PagerHome;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -39,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnViewImage;
     Button btnChooseImage;
     Button btnUploadImage;
+    Button btnGoToPager;
 
     ImageView imageView;
 
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnViewImage = findViewById(R.id.viewImage);
         btnChooseImage = findViewById(R.id.chooseImage);
         btnUploadImage = findViewById(R.id.saveImage);
+        btnGoToPager = findViewById(R.id.goToPager);
 
         imageView = findViewById(R.id.selectedImage);
 
@@ -87,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 uploadImage();
+            }
+        });
+
+        btnGoToPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PagerHome.class);
+                startActivity(intent);
             }
         });
 
