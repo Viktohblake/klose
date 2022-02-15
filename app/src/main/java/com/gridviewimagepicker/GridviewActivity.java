@@ -77,14 +77,9 @@ public class GridviewActivity extends AppCompatActivity {
                             @Override
                             public boolean onMenuItemClick(MenuItem menuItem) {
                                 switch (menuItem.getItemId()) {
-                                    case R.id.menu_1:
-                                        // do your code
-                                        return true;
-                                    case R.id.menu_2:
-                                        // do your code
-                                        return true;
                                     case R.id.delete:
                                         deleteImage(i);
+                                        imageAdapter.notifyDataSetChanged();
                                         return true;
                                     default:
                                         return false;
@@ -94,7 +89,6 @@ public class GridviewActivity extends AppCompatActivity {
                         popupMenu.inflate(R.menu.popup_menu);
                         popupMenu.show();
                         Log.e("onItemLongClick", "onItemLongClick:" + i);
-                        imageAdapter.notifyDataSetChanged();
                         return true;
                     }
                 });
@@ -111,9 +105,11 @@ public class GridviewActivity extends AppCompatActivity {
     }
 
     public void deleteImage(int position) {
+
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
         String selectedItem = imageAdapter.imageList.remove(position);
+
 
         Log.i("GRIDvACT", String.format("UrlToDelete: %s", selectedItem));
 
@@ -126,27 +122,26 @@ public class GridviewActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.i("GRIDvACT", "deleted hopefully");
                     imageAdapter.imageList.add(position, selectedItem);
+                } else {
+                    databaseReference.equalTo(selectedItem);
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
+                                appleSnapshot.getRef().removeValue();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "onCancelled", databaseError.toException());
+                        }
+                    });
                 }
+
                 imageAdapter.notifyDataSetChanged();
 
             }
         });
-
-/*
-                StorageReference storageReference = firebaseStorage.getReferenceFromUrl(selectedItem.getImageUrl());
-                storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("Picture","#deleted");
-                        Toast.makeText(GridviewActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                       Log.e(TAG, "onFailure");
-                    }
-                });
-*/
-
     }
 }
