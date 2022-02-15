@@ -3,6 +3,7 @@ package com.gridviewimagepicker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
-    private final int PICK_IMAGE_REQUEST = 25;
+    private static final int PICK_FILE = 25;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         btnChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chooseImage();
+                galleryPick();
             }
         });
 
@@ -99,18 +100,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void chooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,
-                "Select Image...."), PICK_IMAGE_REQUEST);
+    public void galleryPick() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("*/*");
+        String[] mimeTypes = {"image/*", "video/*"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        startActivityForResult(intent, PICK_FILE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        if (requestCode == PICK_FILE && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
@@ -133,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_LONG).show();
 
                             ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
@@ -161,9 +162,10 @@ public class MainActivity extends AppCompatActivity {
                             //calculating progress percentage
                             double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                             //displaying percentage in progress dialog
-                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                            progressDialog.setMessage("Uploaded " + progress + "%...");
                         }
                     });
         }
     }
+
 }

@@ -3,18 +3,23 @@ package com.gridviewimagepicker;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.gridviewimagepicker.pager.ImagePage;
 
 import java.util.ArrayList;
 
@@ -31,7 +37,6 @@ public class GridviewActivity extends AppCompatActivity {
 
     GridView gridView;
     ImageAdapter imageAdapter;
-    ImageButton imageButton;
 
     private DatabaseReference databaseReference;
     private FirebaseStorage firebaseStorage;
@@ -48,8 +53,6 @@ public class GridviewActivity extends AppCompatActivity {
         imageList = new ArrayList<String>();
 
         gridView = (GridView) findViewById(R.id.gridview);
-        imageButton = (ImageButton) findViewById(R.id.btnDelete);
-
         firebaseStorage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
 
@@ -65,6 +68,38 @@ public class GridviewActivity extends AppCompatActivity {
                 imageAdapter = new ImageAdapter(GridviewActivity.this, imageList);
                 gridView.setAdapter(imageAdapter);
 
+                gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+                    public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                                   int i, long id) {
+                        PopupMenu popupMenu = new PopupMenu(GridviewActivity.this, view);
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem menuItem) {
+                                switch (menuItem.getItemId()) {
+                                    case R.id.menu_1:
+                                        // do your code
+                                        return true;
+                                    case R.id.menu_2:
+                                        // do your code
+                                        return true;
+                                    case R.id.delete:
+                                        deleteImage(i);
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                        popupMenu.inflate(R.menu.popup_menu);
+                        popupMenu.show();
+                        Log.e("onItemLongClick", "onItemLongClick:" + i);
+                        imageAdapter.notifyDataSetChanged();
+                        return true;
+                    }
+                });
+
+                imageAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -73,24 +108,32 @@ public class GridviewActivity extends AppCompatActivity {
             }
 
         });
+    }
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
+    public void deleteImage(int position) {
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+
+        String selectedItem = imageAdapter.imageList.remove(position);
+
+        Log.i("GRIDvACT", String.format("UrlToDelete: %s", selectedItem));
+
+        firebaseStorage.getReferenceFromUrl(selectedItem).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onClick(View view) {
-                deleteImage();
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.i("GRIDvACT", "got here successfully");
+                Toast.makeText(GridviewActivity.this, "Image deleted successfully", Toast.LENGTH_SHORT).show();
+
+                if (!task.isSuccessful()) {
+                    Log.i("GRIDvACT", "deleted hopefully");
+                    imageAdapter.imageList.add(position, selectedItem);
+                }
+                imageAdapter.notifyDataSetChanged();
+
             }
         });
 
-    }
-
-    public void deleteImage() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-        builder.setMessage("Do you want to delete?");
-
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int i) {
-                FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-                StorageReference storageReference = firebaseStorage.getReferenceFromUrl("uploads");
+/*
+                StorageReference storageReference = firebaseStorage.getReferenceFromUrl(selectedItem.getImageUrl());
                 storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -103,18 +146,7 @@ public class GridviewActivity extends AppCompatActivity {
                        Log.e(TAG, "onFailure");
                     }
                 });
+*/
 
-            }
-        });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int i) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
-
 }
