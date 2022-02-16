@@ -14,14 +14,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitle = new ArrayList<>();
 
-//    int tabcount;
-//
-//    public PagerAdapter(@NonNull FragmentManager fm, int behavior) {
-//        super(fm, behavior);
-//        tabcount=behavior;
-//
-//    }
-
     public PagerAdapter(FragmentManager supportFragmentManager) {
         super(supportFragmentManager);
     }
