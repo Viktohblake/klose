@@ -25,7 +25,7 @@ public class Login extends AppCompatActivity {
     TextInputEditText emailInput, passwordInput;
     Button btnLogin;
     ProgressBar progressBar;
-    TextView regPage;
+    TextView regPage, forgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class Login extends AppCompatActivity {
         btnLogin = findViewById(R.id.login);
         progressBar = findViewById(R.id.progressBar);
         regPage = findViewById(R.id.regPage);
+        forgetPassword = findViewById(R.id.forgetPassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +53,13 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Login.this, Registration.class);
                 startActivity(intent);
+            }
+        });
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forgetPassword();
             }
         });
     }
@@ -92,5 +100,10 @@ public class Login extends AppCompatActivity {
                             }
                         }
                     });
+        }
+
+        private void forgetPassword() {
+            Intent intent = new Intent(Login.this, ForgetPassword.class);
+            startActivity(intent);
         }
     }

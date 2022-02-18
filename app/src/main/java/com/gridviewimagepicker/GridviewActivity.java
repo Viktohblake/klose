@@ -103,7 +103,6 @@ public class GridviewActivity extends AppCompatActivity {
 
         String selectedItem = imageAdapter.imageList.remove(position);
 
-
         Log.i("GRIDvACT", String.format("UrlToDelete: %s", selectedItem));
 
         firebaseStorage.getReferenceFromUrl(selectedItem).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
