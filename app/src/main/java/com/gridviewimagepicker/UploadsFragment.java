@@ -2,8 +2,10 @@ package com.gridviewimagepicker;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.PopupMenu;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,8 +29,7 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class GridviewActivity extends AppCompatActivity {
-
+public class UploadsFragment extends Fragment {
     GridView gridView;
     ImageAdapter imageAdapter;
 
@@ -39,13 +41,16 @@ public class GridviewActivity extends AppCompatActivity {
     ArrayList<String> imageList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.gridview_layout);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.gridview_layout, container, false);
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         imageList = new ArrayList<String>();
 
-        gridView = (GridView) findViewById(R.id.gridview);
+        gridView = (GridView) view.findViewById(R.id.gridview);
         firebaseStorage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
 
@@ -58,20 +63,20 @@ public class GridviewActivity extends AppCompatActivity {
                     imageList.add(imageUrl);
                 }
 
-                imageAdapter = new ImageAdapter(GridviewActivity.this, imageList);
+                imageAdapter = new ImageAdapter(getActivity(), imageList);
                 gridView.setAdapter(imageAdapter);
 
                 gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
                     public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                                   int i, long id) {
-                        PopupMenu popupMenu = new PopupMenu(GridviewActivity.this, view);
+                                                   int position, long id) {
+                        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
                         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem menuItem) {
                                 switch (menuItem.getItemId()) {
                                     case R.id.delete:
-                                        deleteImage(i);
+                                        deleteImage(position);
                                         imageAdapter.notifyDataSetChanged();
                                         return true;
                                     default:
@@ -81,7 +86,7 @@ public class GridviewActivity extends AppCompatActivity {
                         });
                         popupMenu.inflate(R.menu.popup_menu);
                         popupMenu.show();
-                        Log.e("onItemLongClick", "onItemLongClick:" + i);
+                        Log.e("onItemLongClick", "onItemLongClick:" + position);
                         return true;
                     }
                 });
@@ -91,7 +96,7 @@ public class GridviewActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(GridviewActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -109,7 +114,7 @@ public class GridviewActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Log.i("GRIDvACT", "got here successfully");
-                Toast.makeText(GridviewActivity.this, "Image deleted successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Image deleted successfully", Toast.LENGTH_SHORT).show();
 
                 if (!task.isSuccessful()) {
                     Log.i("GRIDvACT", "deleted hopefully");

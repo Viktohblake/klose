@@ -1,4 +1,4 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.authentication;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.gridviewimagepicker.R;
 
 public class ForgetPassword extends AppCompatActivity {
 

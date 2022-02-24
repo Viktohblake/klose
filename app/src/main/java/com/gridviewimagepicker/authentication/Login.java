@@ -1,11 +1,9 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.gridviewimagepicker.MainActivity;
+import com.gridviewimagepicker.R;
 
 public class Login extends AppCompatActivity {
 
@@ -40,6 +40,11 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         regPage = findViewById(R.id.regPage);
         forgetPassword = findViewById(R.id.forgetPassword);
+
+        if(firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            startActivity(intent);
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,9 +81,10 @@ public class Login extends AppCompatActivity {
             passwordInput.setError("Please enter your password!");
             return;
         }
-            progressBar.setVisibility(View.VISIBLE);
 
-            // Sign-in existing user
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Sign-in existing user
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -87,23 +93,28 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 Toast.makeText(Login.this,
-                                        "Login Successfully!", Toast.LENGTH_SHORT).show();
-
-                                progressBar.setVisibility(View.GONE);
+                                        "Login Successful", Toast.LENGTH_LONG).show();
 
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 startActivity(intent);
+
                             } else {
-                                Toast.makeText(Login.this,
-                                        "Login Failed, Please Try Again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),
+                                        "Error"+task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         }
                     });
         }
 
-        private void forgetPassword() {
-            Intent intent = new Intent(Login.this, ForgetPassword.class);
-            startActivity(intent);
-        }
+    private void forgetPassword() {
+        Intent intent = new Intent(Login.this, ForgetPassword.class);
+        startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
+}

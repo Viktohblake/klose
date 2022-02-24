@@ -1,11 +1,9 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,6 +16,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.gridviewimagepicker.EditProfileActivity;
+import com.gridviewimagepicker.R;
 
 public class Registration extends AppCompatActivity {
 
@@ -41,6 +41,11 @@ public class Registration extends AppCompatActivity {
 
         btnRegister = findViewById(R.id.register);
         progressBar = findViewById(R.id.progressBar);
+
+        if(firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(Registration.this, EditProfileActivity.class);
+            startActivity(intent);
+        }
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,19 +76,22 @@ public class Registration extends AppCompatActivity {
             return;
         }
 
-        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
+                progressBar.setVisibility(View.GONE);
+
                 if(task.isSuccessful()) {
-                    progressBar.setVisibility(View.GONE);
-                    sendUserToNextActivity();
+
                     Toast.makeText(Registration.this,
                             "Registration Complete!",
                             Toast.LENGTH_SHORT).show();
+
+                    sendUserToNextActivity();
                 }
                 else {
                     progressBar.setVisibility(View.GONE);
@@ -98,7 +106,7 @@ public class Registration extends AppCompatActivity {
 
     private void sendUserToNextActivity() {
         Intent intent = new Intent(Registration.this,
-                Login.class);
+                EditProfileActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
