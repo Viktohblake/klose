@@ -1,7 +1,7 @@
 package com.gridviewimagepicker;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
-
-// FirebaseRecyclerAdapter is a class provided by
-// FirebaseUI. it provides functions to bind, adapt and show
-// database contents in a Recycler View
 
 public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.usersViewholder> {
 //
@@ -35,9 +29,8 @@ public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.user
         return new UserAdapter.usersViewholder(view);
     }
 
-
     @Override
-    protected void onBindViewHolder(@NonNull usersViewholder holder, int position, @NonNull Users model) {
+    protected void onBindViewHolder(@NonNull usersViewholder holder, @SuppressLint("RecyclerView") int position, @NonNull Users model) {
 
         String imgString = model.getUri();
         Picasso.get().load(imgString).into(holder.userProfile);
@@ -45,6 +38,17 @@ public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.user
         holder.userName.setText(model.getmName());
         holder.userLocation.setText(model.getLocation());
         holder.userProfession.setText(model.getProfession());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String user_id = getRef(position).getKey().toString();
+
+                Intent profileIntent = new Intent(view.getContext(), UserProfileActivity.class);
+                profileIntent.putExtra("user_id", user_id);
+                view.getContext().startActivity(profileIntent);
+            }
+        });
     }
 
     public class usersViewholder extends RecyclerView.ViewHolder {

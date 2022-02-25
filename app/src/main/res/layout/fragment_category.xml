@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="50dp"
-        android:text="EMPTY FRAGMENT"
+        android:text="CATEGORY FRAGMENT"
         android:textAlignment="center" />
 
 </LinearLayout>

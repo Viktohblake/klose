@@ -52,7 +52,7 @@ import java.util.Map;
 public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ImageView profileImage, usrImage;
     private Button saveBtn;
-    private EditText editName, editProfession, editAge, editHobby;
+    private EditText editName, editProfession, editAboutMe, editPhoneNo, editPhoneNo2;
     FirebaseAuth mFirebaseAuth;
     private Uri mUri;
     private ProgressBar mProgressbar;
@@ -78,12 +78,12 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         saveBtn =findViewById(R.id.userProfileSaveBtn);
         editName = findViewById(R.id.userNameField);
         editProfession = findViewById(R.id.userProfessionField);
+        editAboutMe = findViewById(R.id.userAboutMeField);
+        editPhoneNo = findViewById(R.id.userPhoneNoField);
+        editPhoneNo2 = findViewById(R.id.userPhoneNoField2);
         mProgressbar = findViewById(R.id.userProfileProgressBar);
         usrImage = findViewById(R.id.profilePic);
         radioGroup = findViewById(R.id.radioGroupID);
-        dateTxt = findViewById(R.id.dateFormatTxtID);
-        ageValue = findViewById(R.id.ageValueID);
-        datePickerIcon = findViewById(R.id.ageBtnID);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("Users");
         FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -117,47 +117,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        datePickerIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("OnClick", view.toString());
-                final Calendar calendar = Calendar.getInstance();
-                int mYear = calendar.get(Calendar.YEAR);
-                int mMonth = calendar.get(Calendar.MONTH);
-                int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(),
-                        datePickerListener, mYear, mMonth, mDay);
-                datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
-                datePickerDialog.show();
-                dateTxt.setVisibility(View.INVISIBLE);
-            }
-        });
 
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.DAY_OF_MONTH, day);
-            String format = new SimpleDateFormat("dd mm yyyy").format(calendar.getTime());
-            dateTxt.setText(format);
-            ageValue.setText(Integer.toString(calculateAge(calendar.getTimeInMillis())));
-        }
-    };
-
-    private int calculateAge(long date) {
-        Calendar dob = Calendar.getInstance();
-        dob.setTimeInMillis(date);
-
-        Calendar today = Calendar.getInstance();
-        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-        if(today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)){
-            age--;
-        }
-        return age;
     }
 
     private String getFileExt(Uri uri){
@@ -193,10 +153,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         String mName = editName.getText().toString();
         String location = spinner.getSelectedItem().toString();
         String profession = editProfession.getText().toString();
-        String age = ageValue.getText().toString();
+        String aboutMe = editAboutMe.getText().toString();
+        String phoneNo = editPhoneNo.getText().toString();
+        String phoneNo2 = editPhoneNo2.getText().toString();
+
         Picasso.get().load(mUri).into(usrImage);
 
-        if((!TextUtils.isEmpty(mName) || !TextUtils.isEmpty(age)) && mUri !=null){
+        if((!TextUtils.isEmpty(mName) || !TextUtils.isEmpty(profession)) && mUri !=null){
 
             final StorageReference reference =
                     mStorageReference.child(System.currentTimeMillis()+ "."+getFileExt(mUri));
@@ -231,17 +194,21 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         profile.put("sex", radioButton.getText().toString());
                         profile.put("location", location);
                         profile.put("profession", profession);
-                        profile.put("age", age);
+                        profile.put("about", aboutMe);
                         profile.put("privacy", "public");
                         profile.put("Uri", downloadUri != null ? downloadUri.toString():"");
                         profile.put("uid", currentUserId);
                         profile.put("profile images", "default");
+                        profile.put("phoneNo", phoneNo);
+                        profile.put("phoneNo2", phoneNo2);
 
                         user_member.setmName(mName);
                         user_member.setSex(radioButton.toString());
                         user_member.setLocation(location);
                         user_member.setProfession(profession);
-                        user_member.setAge(age);
+                        user_member.setPhoneNo(phoneNo);
+                        user_member.setPhoneNo2(phoneNo2);
+                        user_member.setAboutMe(aboutMe);
                         user_member.setUrl(downloadUri.toString());
                         user_member.setUserid(currentUserId);
 

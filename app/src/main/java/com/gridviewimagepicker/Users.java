@@ -3,12 +3,13 @@ package com.gridviewimagepicker;
 import android.net.Uri;
 
 public class Users {
-    String mName, userid, profile, url, Uri, name, sex, location, age, profession;
+    String mName, userid, profile, url, Uri, name, sex, location, phoneNo, phoneNo2, profession, aboutMe;
 
     public Users() {}
 
     public Users(String mName, String userid, String profile, String url,
-                 String Uri, String name, String sex, String location, String age, String profession) {
+                 String Uri, String name, String sex, String location,
+                 String phoneNo, String phoneNo2, String profession, String aboutMe) {
         this.mName = mName;
         this.userid = userid;
         this.profile = profile;
@@ -17,8 +18,10 @@ public class Users {
         this.name = name;
         this.sex = sex;
         this.location = location;
-        this.age = age;
+        this.phoneNo = phoneNo;
+        this.phoneNo2 = phoneNo2;
         this.profession = profession;
+        this.aboutMe = aboutMe;
     }
 
     public String getmName() {
@@ -85,12 +88,20 @@ public class Users {
         this.location = location;
     }
 
-    public String getAge() {
-        return age;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getPhoneNo2() {
+        return phoneNo2;
+    }
+
+    public void setPhoneNo2(String phoneNo2) {
+        this.phoneNo2 = phoneNo2;
     }
 
     public String getProfession() {
@@ -99,5 +110,13 @@ public class Users {
 
     public void setProfession(String profession) {
         this.profession = profession;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 }

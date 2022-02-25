@@ -15,7 +15,7 @@
         android:theme="@style/Theme.GridViewImagePicker">
         <activity
             android:name=".UserProfileActivity"
-            android:exported="false" />
+            android:exported="true"/>
         <activity
             android:name=".authentication.Login"
             android:exported="true">

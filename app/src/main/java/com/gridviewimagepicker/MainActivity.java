@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
-        bottomNavigationView.getOrCreateBadge(R.id.chat).setNumber(2);
+        bottomNavigationView.getOrCreateBadge(R.id.category).setNumber(2);
 
     }
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     FragmentUserProfile fragmentUserProfile = new FragmentUserProfile();
     GalleryFragment galleryFragment = new GalleryFragment();
     UsersFragment usersFragment = new UsersFragment();
-    ChatFragment chatFragment = new ChatFragment();
+    CategoryFragment categoryFragment = new CategoryFragment();
     UploadsFragment uploadsFragment = new UploadsFragment();
 
     @Override
@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 Toast.makeText(MainActivity.this, "Logged out successfully", Toast.LENGTH_SHORT);
                 return true;
 
-            case R.id.chat:
+            case R.id.category:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, chatFragment).commit();
+                        .replace(R.id.container, categoryFragment).commit();
                 return true;
         }
         return false;

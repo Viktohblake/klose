@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,13 +32,15 @@ public class FragmentUserProfile extends Fragment {
 
     private static final int RESULT_OK = 1 ;
     private ImageView usrImage, cameraButton, userDisplayPic, mediaBtn, settingsButton;
-    private TextView usrName, usrLocation, usrSex, usrAge, verifiedTxt, verifyBtn;
+    private TextView usrName, usrLocation, usrSex, usrAboutMe, usrPhoneNo, usrPhoneNo2, usrProfession,
+            verifiedTxt, verifyBtn;
     FirebaseAuth mFirebaseAuth;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference rootReference, friendRequestRef, mUserRef;
     private static final int PICK_IMAGE = 1;
     private Uri mUri;
     String senderId;
+    Button editProfileBtn;
 
     @Nullable
     @Override
@@ -52,7 +55,12 @@ public class FragmentUserProfile extends Fragment {
         usrImage = view.findViewById(R.id.user_profilePic);
         usrName = view.findViewById(R.id.userNameId);
         usrSex = view.findViewById(R.id.userSexID);
-        usrAge = view.findViewById(R.id.userAgeId);
+        usrAboutMe = view.findViewById(R.id.userAboutID);
+        usrPhoneNo = view.findViewById(R.id.userPhoneNoID);
+        usrPhoneNo2 = view.findViewById(R.id.userPhoneNo2ID);
+        usrProfession = view.findViewById(R.id.userProfessionID);
+
+        editProfileBtn = view.findViewById(R.id.userProfileEditBtn);
         verifiedTxt = view.findViewById(R.id.verifiedTxtID);
         verifyBtn = view.findViewById(R.id.emailVerifyBtn);
 //        cameraButton = view.findViewById(R.id.cameraBtnID);
@@ -103,6 +111,14 @@ public class FragmentUserProfile extends Fragment {
 //            }
 //        });
 
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mFirebaseAuth = FirebaseAuth.getInstance();
         senderId = mFirebaseAuth.getCurrentUser().getUid();
 
@@ -139,7 +155,7 @@ public class FragmentUserProfile extends Fragment {
                     user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(v.getContext(), "Verification link was sent to the email addresss", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(), "Verification link was sent to the email address", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -169,12 +185,18 @@ public class FragmentUserProfile extends Fragment {
                 }else {
                     String name = snapshot.child("mName").getValue().toString();
                     usrName.setText(name);
-                    String age = snapshot.child("age").getValue().toString();
-                    usrAge.setText(age);
-                    String locat = snapshot.child("location").getValue().toString();
-                    usrLocation.setText(locat);
+                    String aboutMe = snapshot.child("about").getValue().toString();
+                    usrAboutMe.setText(aboutMe);
+                    String location = snapshot.child("location").getValue().toString();
+                    usrLocation.setText(location);
                     String sex = snapshot.child("sex").getValue().toString();
                     usrSex.setText(sex);
+                    String profession = snapshot.child("profession").getValue().toString();
+                    usrProfession.setText(profession);
+                    String phoneNo = snapshot.child("phoneNo").getValue().toString();
+                    usrPhoneNo.setText(phoneNo);
+                    String phoneNo2 = snapshot.child("phoneNo2").getValue().toString();
+                    usrPhoneNo2.setText(phoneNo2);
 
                     String url = snapshot.child("Uri").getValue().toString();
                     Picasso.get().load(url).into(usrImage);
