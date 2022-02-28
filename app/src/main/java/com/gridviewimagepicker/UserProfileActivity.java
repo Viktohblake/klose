@@ -3,11 +3,13 @@ package com.gridviewimagepicker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.gridviewimagepicker.pager.ImagePage;
+import com.gridviewimagepicker.pager.PagerHome;
+import com.gridviewimagepicker.pager.VideoPage;
 import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -25,10 +30,12 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private String recieverUserId;
     Toolbar toolbar;
-    TextView userName, userPhoneNo, userPhoneNo2, userLocation, userProfession, userSex;
+    TextView userName, userPhoneNo, userPhoneNo2, userLocation, userProfession, userSex, userAbout;
     ImageView userImage;
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+    LinearLayout linearLayout;
+    LinearLayout linearLayout2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +51,33 @@ public class UserProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        linearLayout = findViewById(R.id.goToImagePage);
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserProfileActivity.this, PagerHome.class);
+                startActivity(intent);
+            }
+        });
+
+        linearLayout2 = findViewById(R.id.goToVideoPage);
+
+        linearLayout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserProfileActivity.this, PagerHome.class);
+                startActivity(intent);
+            }
+        });
+
         userName = findViewById(R.id.userProfileName);
         userPhoneNo = findViewById(R.id.userProfilePhoneNo);
         userPhoneNo2 = findViewById(R.id.userProfilePhoneNo2);
         userLocation = findViewById(R.id.userProfileLocation);
         userProfession = findViewById(R.id.userProfileProfession);
         userSex = findViewById(R.id.userProfileSex);
+        userAbout = findViewById(R.id.userAboutMe);
 
         userImage = findViewById(R.id.userProfileImage);
 
@@ -88,6 +116,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     userPhoneNo.setText(phoneNo);
                     String phoneNo2 = snapshot.child("phoneNo2").getValue().toString();
                     userPhoneNo2.setText(phoneNo2);
+                    String aboutMe = snapshot.child("about").getValue().toString();
+                    userAbout.setText(aboutMe);
 
                     String url = snapshot.child("Uri").getValue().toString();
                     Picasso.get().load(url).into(userImage);

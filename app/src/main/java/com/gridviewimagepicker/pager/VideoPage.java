@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.UploadsFragment;
 
 public class VideoPage extends Fragment {
 
@@ -19,6 +21,10 @@ public class VideoPage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        UploadsFragment uploadsFragment = new UploadsFragment();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.video_fragment, uploadsFragment).commit();
     }
 
     @Override

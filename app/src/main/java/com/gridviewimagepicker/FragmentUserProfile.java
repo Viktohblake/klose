@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,7 +39,7 @@ public class FragmentUserProfile extends Fragment {
     FirebaseAuth mFirebaseAuth;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference rootReference, friendRequestRef, mUserRef;
-    private static final int PICK_IMAGE = 1;
+    private static final int PICK_FILE = 1;
     private Uri mUri;
     String senderId;
     Button editProfileBtn;
@@ -65,7 +67,7 @@ public class FragmentUserProfile extends Fragment {
         verifyBtn = view.findViewById(R.id.emailVerifyBtn);
 //        cameraButton = view.findViewById(R.id.cameraBtnID);
         userDisplayPic = view.findViewById(R.id.user_profilePic);
-//        mediaBtn = view.findViewById(R.id.mediaBtnId);
+        mediaBtn = view.findViewById(R.id.mediaBtnId);
         usrLocation = view.findViewById(R.id.locationID);
 //        settingsButton = view.findViewById(R.id.settingsBtnID);
         rootReference = FirebaseDatabase.getInstance().getReference();
@@ -80,7 +82,7 @@ public class FragmentUserProfile extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,PICK_IMAGE);
+                startActivityForResult(intent,PICK_FILE);
             }
         });
 
@@ -94,14 +96,17 @@ public class FragmentUserProfile extends Fragment {
 //
 //            }
 //        });
-//
-//        mediaBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        mediaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GalleryFragment galleryFragment = new GalleryFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, galleryFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
 //        settingsButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -129,7 +134,7 @@ public class FragmentUserProfile extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         try {
-            if (requestCode == PICK_IMAGE || resultCode == RESULT_OK || data != null || data.getData() != null) {
+            if (requestCode == PICK_FILE || resultCode == RESULT_OK || data != null || data.getData() != null) {
                 mUri = data.getData();
 
                 Picasso.get().load(mUri).into(userDisplayPic);
@@ -166,7 +171,6 @@ public class FragmentUserProfile extends Fragment {
                 }
             });
         } else {
-
             verifyBtn.setVisibility(View.INVISIBLE);
             verifiedTxt.setText("VERIFIED");
             verifiedTxt.setTextColor(Color.parseColor("#1FE427"));
@@ -182,7 +186,7 @@ public class FragmentUserProfile extends Fragment {
                 if(!snapshot.exists()) {
                     Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     String name = snapshot.child("mName").getValue().toString();
                     usrName.setText(name);
                     String aboutMe = snapshot.child("about").getValue().toString();

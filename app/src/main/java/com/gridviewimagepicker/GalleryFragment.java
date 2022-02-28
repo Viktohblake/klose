@@ -62,7 +62,7 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        btnViewImage = view.findViewById(R.id.viewImage);
+//        btnViewImage = view.findViewById(R.id.viewImage);
         btnChooseImage = view.findViewById(R.id.chooseImage);
         btnUploadImage = view.findViewById(R.id.saveImage);
         btnGoToPager = view.findViewById(R.id.goToPager);
@@ -75,14 +75,14 @@ public class GalleryFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
 
-        btnViewImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UploadsFragment uploadsFragment = new UploadsFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, uploadsFragment).commit();
-            }
-        });
+//        btnViewImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                UploadsFragment uploadsFragment = new UploadsFragment();
+//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.container, uploadsFragment).commit();
+//            }
+//        });
 
         btnChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +154,12 @@ public class GalleryFragment extends Fragment {
                                 }
                             });
 
+                            UploadsFragment uploadsFragment = new UploadsFragment();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.container, uploadsFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -174,4 +180,5 @@ public class GalleryFragment extends Fragment {
                     });
         }
     }
+
 }
