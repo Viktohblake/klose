@@ -36,7 +36,6 @@ public class UploadsFragment extends Fragment {
     private DatabaseReference databaseReference;
     private FirebaseStorage firebaseStorage;
     private ValueEventListener valueEventListener;
-    private StorageReference storageReference;
 
     ArrayList<String> imageList;
 
@@ -141,4 +140,10 @@ public class UploadsFragment extends Fragment {
             }
         });
     }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        ((MainActivity) getActivity()).setActionBarTitle("Uploads");
+//    }
 }

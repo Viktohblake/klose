@@ -78,4 +78,10 @@ public class UsersFragment extends Fragment {
         userAdapter.startListening();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        ((MainActivity) getActivity()).setActionBarTitle("Users");
+    }
+
 }

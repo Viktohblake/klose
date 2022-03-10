@@ -2,8 +2,10 @@ package com.gridviewimagepicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,6 +23,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Profile");
+        toolbar.setTitleTextColor(Color.WHITE);
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -29,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.getOrCreateBadge(R.id.category).setNumber(2);
 
     }
-
 
     FragmentUserProfile fragmentUserProfile = new FragmentUserProfile();
     GalleryFragment galleryFragment = new GalleryFragment();
@@ -75,5 +82,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

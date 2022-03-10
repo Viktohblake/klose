@@ -32,8 +32,6 @@ public class UserProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView userName, userPhoneNo, userPhoneNo2, userLocation, userProfession, userSex, userAbout;
     ImageView userImage;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
     LinearLayout linearLayout;
     LinearLayout linearLayout2;
 
@@ -84,9 +82,6 @@ public class UserProfileActivity extends AppCompatActivity {
         recieverUserId = getIntent().getExtras().get("user_id").toString();
 
         Toast.makeText(this, "This user id is" + recieverUserId, Toast.LENGTH_SHORT).show();
-//
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        recieverUserId = firebaseAuth.getUid();
 
         initView();
 
@@ -119,7 +114,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     String aboutMe = snapshot.child("about").getValue().toString();
                     userAbout.setText(aboutMe);
 
-                    String url = snapshot.child("Uri").getValue().toString();
+                    String url = snapshot.child("uri").getValue().toString();
                     Picasso.get().load(url).into(userImage);
                 }
             }

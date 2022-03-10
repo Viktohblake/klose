@@ -36,23 +36,6 @@ tools:context=".FragmentUserProfile">
 <!--        <androidx.cardview.widget.CardView-->
 <!--            android:id="@+id/cameraCardId"-->
 <!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/cardviewID"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/relativeLayoutID"-->
-<!--            app:cardCornerRadius="10dp">-->
-<!--            <ImageView-->
-<!--                android:id="@+id/cameraBtnID"-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:src="@drawable/ic_baseline_camera"-->
-<!--                android:background="@color/cardview_dark_background"-->
-<!--                android:padding="5dp"-->
-<!--                android:visibility="visible"-->
-<!--                />-->
-<!--        </androidx.cardview.widget.CardView>-->
-
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -147,8 +130,7 @@ tools:context=".FragmentUserProfile">
                         android:textStyle="normal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
+                        app:layout_constraintTop_toTopOf="parent"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -325,24 +307,6 @@ tools:context=".FragmentUserProfile">
             app:layout_constraintTop_toBottomOf="@+id/detailCardViewID">
 
         </TextView>
-
-        <Button
-            android:id="@+id/userProfileEditBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_background"
-            android:text="Edit Details"
-            android:textAlignment="center"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upgradeBtnId"
-            tools:ignore="TouchTargetSizeCheck">
-
-        </Button>
 
     </LinearLayout>
 

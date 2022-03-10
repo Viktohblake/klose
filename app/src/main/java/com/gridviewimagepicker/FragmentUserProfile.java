@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,17 +33,16 @@ import com.squareup.picasso.Picasso;
 
 public class FragmentUserProfile extends Fragment {
 
-    private static final int RESULT_OK = 1 ;
-    private ImageView usrImage, cameraButton, userDisplayPic, mediaBtn, settingsButton;
+    private static final int RESULT_OK = 1;
+    private ImageView usrImage, userDisplayPic, mediaBtn, settingsButton;
     private TextView usrName, usrLocation, usrSex, usrAboutMe, usrPhoneNo, usrPhoneNo2, usrProfession,
             verifiedTxt, verifyBtn;
     FirebaseAuth mFirebaseAuth;
-    FirebaseDatabase mFirebaseDatabase;
-    DatabaseReference rootReference, friendRequestRef, mUserRef;
+    DatabaseReference rootReference;
     private static final int PICK_FILE = 1;
     private Uri mUri;
     String senderId;
-    Button editProfileBtn;
+    Users userObject;
 
     @Nullable
     @Override
@@ -61,18 +61,14 @@ public class FragmentUserProfile extends Fragment {
         usrPhoneNo = view.findViewById(R.id.userPhoneNoID);
         usrPhoneNo2 = view.findViewById(R.id.userPhoneNo2ID);
         usrProfession = view.findViewById(R.id.userProfessionID);
+        usrLocation = view.findViewById(R.id.locationID);
 
-        editProfileBtn = view.findViewById(R.id.userProfileEditBtn);
         verifiedTxt = view.findViewById(R.id.verifiedTxtID);
         verifyBtn = view.findViewById(R.id.emailVerifyBtn);
-//        cameraButton = view.findViewById(R.id.cameraBtnID);
         userDisplayPic = view.findViewById(R.id.user_profilePic);
         mediaBtn = view.findViewById(R.id.mediaBtnId);
-        usrLocation = view.findViewById(R.id.locationID);
-//        settingsButton = view.findViewById(R.id.settingsBtnID);
+        settingsButton = view.findViewById(R.id.settingsBtnID);
         rootReference = FirebaseDatabase.getInstance().getReference();
-
-        // Intent intent = new Intent();
 
         initViews();
 
@@ -82,20 +78,9 @@ public class FragmentUserProfile extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,PICK_FILE);
+                startActivityForResult(intent, PICK_FILE);
             }
         });
-
-//        cameraButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(intent,PICK_IMAGE);
-//
-//            }
-//        });
 
         mediaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,18 +93,13 @@ public class FragmentUserProfile extends Fragment {
             }
         });
 
-//        settingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), SettingsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
-        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user_object", userObject );
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -139,15 +119,16 @@ public class FragmentUserProfile extends Fragment {
 
                 Picasso.get().load(mUri).into(userDisplayPic);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
     }
 
-    void initViews(){
+    void initViews() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserId = user.getUid();
-        if(!user.isEmailVerified()){
+
+        if (!user.isEmailVerified()) {
             verifiedTxt.setText("UNVERIFIED");
             verifiedTxt.setTextColor(Color.parseColor("#E91E63"));
             verifiedTxt.setVisibility(View.VISIBLE);
@@ -183,28 +164,20 @@ public class FragmentUserProfile extends Fragment {
         rootReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!snapshot.exists()) {
+                if (!snapshot.exists()) {
                     Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                     startActivity(intent);
                 } else {
-                    String name = snapshot.child("mName").getValue().toString();
-                    usrName.setText(name);
-                    String aboutMe = snapshot.child("about").getValue().toString();
-                    usrAboutMe.setText(aboutMe);
-                    String location = snapshot.child("location").getValue().toString();
-                    usrLocation.setText(location);
-                    String sex = snapshot.child("sex").getValue().toString();
-                    usrSex.setText(sex);
-                    String profession = snapshot.child("profession").getValue().toString();
-                    usrProfession.setText(profession);
-                    String phoneNo = snapshot.child("phoneNo").getValue().toString();
-                    usrPhoneNo.setText(phoneNo);
-                    String phoneNo2 = snapshot.child("phoneNo2").getValue().toString();
-                    usrPhoneNo2.setText(phoneNo2);
+                    userObject = snapshot.getValue(Users.class);
+                    usrName.setText(userObject.getmName());
+                    usrLocation.setText(userObject.getLocation());
+                    usrSex.setText(userObject.getSex());
+                    usrProfession.setText(userObject.getProfession());
+                    usrPhoneNo.setText(userObject.getPhoneNo());
+                    usrPhoneNo2.setText(userObject.getPhoneNo2());
+                    usrAboutMe.setText(userObject.getAbout());
 
-                    String url = snapshot.child("Uri").getValue().toString();
-                    Picasso.get().load(url).into(usrImage);
-
+                    Picasso.get().load(userObject.getUri()).into(usrImage);
                 }
             }
 
@@ -214,6 +187,12 @@ public class FragmentUserProfile extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        ((MainActivity) getActivity()).setActionBarTitle("Profile");
     }
 
 }

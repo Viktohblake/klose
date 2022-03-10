@@ -35,14 +35,14 @@
         android:background="@color/design_default_color_primary"
         tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/custom_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="App Name"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/custom_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="App Name"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold" />-->
 
     </androidx.appcompat.widget.Toolbar>
 
