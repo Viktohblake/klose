@@ -9,7 +9,7 @@ tools:context=".FragmentUserProfile">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/graylight"
+    android:background="@color/cardview_light_background"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -33,9 +33,6 @@ tools:context=".FragmentUserProfile">
                     android:visibility="visible"/>
             </androidx.cardview.widget.CardView>
 
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/cameraCardId"-->
-<!--            android:layout_width="wrap_content"-->
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +54,7 @@ tools:context=".FragmentUserProfile">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="450dp"
             android:background="@drawable/gradientbackground"
             android:orientation="vertical">
 
@@ -101,50 +98,59 @@ tools:context=".FragmentUserProfile">
 
             </TextView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/aboutTextCardID"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="60dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="10dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
 
-                <LinearLayout
-                    android:id="@+id/cardDescId"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/aboutTextCardID"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="60dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="10dp">
 
-                    <TextView
-                        android:id="@+id/userAboutID"
+                    <LinearLayout
+                        android:id="@+id/cardDescId"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:padding="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="normal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
-            </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:id="@+id/userAboutID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:padding="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="normal" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/graylight">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -244,6 +250,15 @@ tools:context=".FragmentUserProfile">
                 android:textStyle="bold" />
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp">
+
         <TextView
             android:id="@+id/verifiedTxtID"
             android:layout_width="wrap_content"
@@ -269,6 +284,7 @@ tools:context=".FragmentUserProfile">
             android:layout_marginStart="150dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="150dp"
+            android:layout_gravity="center"
             app:cardCornerRadius="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -277,8 +293,8 @@ tools:context=".FragmentUserProfile">
 
             <TextView
                 android:id="@+id/emailVerifyBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:padding="5dp"
                 android:text="Verify Now"
@@ -292,7 +308,7 @@ tools:context=".FragmentUserProfile">
         <TextView
             android:id="@+id/upgradeBtnId"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/button_background"
             android:padding="10dp"
             android:text="UPGRADE TO PREMIUM"
