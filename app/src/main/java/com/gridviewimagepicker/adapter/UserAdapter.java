@@ -1,4 +1,4 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.activities.UserProfileActivity;
+import com.gridviewimagepicker.model.Users;
 import com.squareup.picasso.Picasso;
 
 public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.usersViewholder> {

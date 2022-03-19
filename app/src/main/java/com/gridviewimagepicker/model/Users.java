@@ -1,15 +1,15 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.model;
 
 import android.net.Uri;
 import java.io.Serializable;
 
 public class Users implements Serializable {
-    String mName, userid, Uri, name, sex, location, phoneNo, phoneNo2, profession, about;
+    String mName, userid, Uri, name, sex, location, phoneNo, phoneNo2, profession, about, address;
 
     public Users() {}
 
     public Users(String mName, String userid, String Uri, String name, String sex, String location,
-                 String phoneNo, String phoneNo2, String profession, String about) {
+                 String phoneNo, String phoneNo2, String profession, String about, String address) {
         this.mName = mName;
         this.userid = userid;
         this.Uri = Uri;
@@ -20,6 +20,7 @@ public class Users implements Serializable {
         this.phoneNo2 = phoneNo2;
         this.profession = profession;
         this.about = about;
+        this.address = address;
     }
 
     public String getmName() {
@@ -100,5 +101,13 @@ public class Users implements Serializable {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

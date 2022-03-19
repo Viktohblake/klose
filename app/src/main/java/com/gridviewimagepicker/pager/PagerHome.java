@@ -24,8 +24,8 @@ public class PagerHome extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
 
         // add the fragments
-        pagerAdapter.add(new ImagePage(), "Image");
-        pagerAdapter.add(new VideoPage(), "Video");
+        pagerAdapter.add(new ImagePage(), "Uploads");
+//        pagerAdapter.add(new VideoPage(), "Video");
 
         // Set the adapter
         viewPager.setAdapter(pagerAdapter);

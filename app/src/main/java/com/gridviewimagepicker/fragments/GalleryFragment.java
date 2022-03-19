@@ -1,10 +1,9 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,9 +29,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.gridviewimagepicker.pager.PagerHome;
+import com.gridviewimagepicker.R;
 
-import java.io.IOException;
 import java.util.UUID;
 
 public class GalleryFragment extends Fragment {
@@ -66,7 +64,7 @@ public class GalleryFragment extends Fragment {
 //        btnViewImage = view.findViewById(R.id.viewImage);
         btnChooseImage = view.findViewById(R.id.chooseImage);
         btnUploadImage = view.findViewById(R.id.saveImage);
-        btnGoToPager = view.findViewById(R.id.goToPager);
+//        btnGoToPager = view.findViewById(R.id.goToPager);
 
         imageView = view.findViewById(R.id.selectedImage);
 
@@ -99,13 +97,13 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        btnGoToPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PagerHome.class);
-                startActivity(intent);
-            }
-        });
+//        btnGoToPager.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), PagerHome.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     public void galleryPick() {
@@ -122,12 +120,13 @@ public class GalleryFragment extends Fragment {
         if (requestCode == PICK_FILE && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            uploadImage();
+//            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
+//                imageView.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -142,8 +141,6 @@ public class GalleryFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
 
                             ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
@@ -154,6 +151,9 @@ public class GalleryFragment extends Fragment {
                                     databaseReference.child(uploadId).setValue(imageUrl);
                                 }
                             });
+
+                            Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
 
                             UploadsFragment uploadsFragment = new UploadsFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();

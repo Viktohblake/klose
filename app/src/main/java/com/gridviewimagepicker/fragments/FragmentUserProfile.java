@@ -1,15 +1,13 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.fragments;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,14 +26,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.gridviewimagepicker.activities.EditProfileActivity;
+import com.gridviewimagepicker.activities.MainActivity;
+import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.location.SeeLocation;
+import com.gridviewimagepicker.model.Users;
 import com.squareup.picasso.Picasso;
 
 public class FragmentUserProfile extends Fragment {
 
     private static final int RESULT_OK = 1;
     private ImageView usrImage, userDisplayPic, mediaBtn, settingsButton;
-    private TextView usrName, usrLocation, usrSex, usrAboutMe, usrPhoneNo, usrPhoneNo2, usrProfession,
-            verifiedTxt, verifyBtn;
+    private TextView usrName, usrLocation, usrSex, usrAboutMe, usrPhoneNo, usrPhoneNo2, usrProfession, usrAddress,
+            verifiedTxt, verifyBtn, upgradePremiumBtn, locationBtn;
     FirebaseAuth mFirebaseAuth;
     DatabaseReference rootReference;
     private static final int PICK_FILE = 1;
@@ -62,9 +64,13 @@ public class FragmentUserProfile extends Fragment {
         usrPhoneNo2 = view.findViewById(R.id.userPhoneNo2ID);
         usrProfession = view.findViewById(R.id.userProfessionID);
         usrLocation = view.findViewById(R.id.locationID);
+        usrAddress = view.findViewById(R.id.addressID);
 
         verifiedTxt = view.findViewById(R.id.verifiedTxtID);
         verifyBtn = view.findViewById(R.id.emailVerifyBtn);
+
+        locationBtn = view.findViewById(R.id.locationBtnID);
+
         userDisplayPic = view.findViewById(R.id.user_profilePic);
         mediaBtn = view.findViewById(R.id.mediaBtnId);
         settingsButton = view.findViewById(R.id.settingsBtnID);
@@ -85,9 +91,9 @@ public class FragmentUserProfile extends Fragment {
         mediaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GalleryFragment galleryFragment = new GalleryFragment();
+                UploadsFragment uploadsFragment = new UploadsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, galleryFragment);
+                transaction.replace(R.id.container, uploadsFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -100,6 +106,14 @@ public class FragmentUserProfile extends Fragment {
                 bundle.putSerializable("user_object", userObject );
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SeeLocation.class);
                 startActivity(intent);
             }
         });
@@ -151,8 +165,8 @@ public class FragmentUserProfile extends Fragment {
                     });
                 }
             });
-        } else {
-            verifyBtn.setVisibility(View.INVISIBLE);
+        } else if(user.isEmailVerified()){
+            verifyBtn.setVisibility(View.GONE);
             verifiedTxt.setText("VERIFIED");
             verifiedTxt.setTextColor(Color.parseColor("#1FE427"));
         }
@@ -176,6 +190,7 @@ public class FragmentUserProfile extends Fragment {
                     usrPhoneNo.setText(userObject.getPhoneNo());
                     usrPhoneNo2.setText(userObject.getPhoneNo2());
                     usrAboutMe.setText(userObject.getAbout());
+                    usrAddress.setText(userObject.getAddress());
 
                     Picasso.get().load(userObject.getUri()).into(usrImage);
                 }

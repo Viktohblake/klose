@@ -1,4 +1,4 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,13 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.gridviewimagepicker.R;
 import com.gridviewimagepicker.authentication.Login;
+import com.gridviewimagepicker.fragments.CategoryFragment;
+import com.gridviewimagepicker.fragments.FragmentUserProfile;
+import com.gridviewimagepicker.fragments.GalleryFragment;
+import com.gridviewimagepicker.fragments.UploadsFragment;
+import com.gridviewimagepicker.fragments.UsersFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -34,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
-        bottomNavigationView.getOrCreateBadge(R.id.category).setNumber(2);
+        bottomNavigationView.getOrCreateBadge(R.id.category).setNumber(11);
 
     }
 

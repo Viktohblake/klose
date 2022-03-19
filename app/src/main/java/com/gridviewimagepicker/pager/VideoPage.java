@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.gridviewimagepicker.R;
-import com.gridviewimagepicker.UploadsFragment;
+import com.gridviewimagepicker.fragments.UploadsFragment;
 
 public class VideoPage extends Fragment {
 

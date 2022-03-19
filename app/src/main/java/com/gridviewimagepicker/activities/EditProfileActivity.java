@@ -1,37 +1,28 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.activities;
 
-import android.app.DatePickerDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,31 +30,23 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.model.Users;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ImageView profileImage, usrImage;
     private Button saveBtn;
-    private EditText editName, editProfession, editAboutMe, editPhoneNo, editPhoneNo2;
+    private EditText editName, editAddress, editAboutMe, editPhoneNo, editPhoneNo2;
     private Uri mUri;
     private ProgressBar mProgressbar;
     private static final int PICK_IMAGE = 1;
@@ -75,7 +58,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private String currentUserId;
     private RadioGroup radioGroup;
     private RadioButton radioButton, radioButtonMale, radioButtonFemale;
-    private Spinner spinner;
+    private Spinner spinnerLocation, spinnerProfession;
     boolean isNewUpload = false;
 
     @Override
@@ -87,7 +70,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         profileImage = findViewById(R.id.profilePic);
         saveBtn = findViewById(R.id.userProfileSaveBtn);
         editName = findViewById(R.id.userNameField);
-        editProfession = findViewById(R.id.userProfessionField);
+        editAddress = findViewById(R.id.userAddressField);
         editAboutMe = findViewById(R.id.userAboutMeField);
         editPhoneNo = findViewById(R.id.userPhoneNoField);
         editPhoneNo2 = findViewById(R.id.userPhoneNoField2);
@@ -119,12 +102,19 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        spinner = findViewById(R.id.spinnerID);
-        ArrayAdapter<CharSequence> adapter =
+        spinnerProfession = findViewById(R.id.professionSpinnerID);
+        ArrayAdapter<CharSequence> professionAdapter =
+                ArrayAdapter.createFromResource(this, R.array.profession, android.R.layout.simple_spinner_item);
+        professionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerProfession.setAdapter(professionAdapter);
+        spinnerProfession.setOnItemSelectedListener(this);
+
+        spinnerLocation = findViewById(R.id.locationSpinnerID);
+        ArrayAdapter<CharSequence> locationAdapter =
                 ArrayAdapter.createFromResource(this, R.array.location, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLocation.setAdapter(locationAdapter);
+        spinnerLocation.setOnItemSelectedListener(this);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,19 +133,26 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             Picasso.get().load(user_member.getUri()).into(profileImage);
 
             editName.setText(user_member.getmName());
-            editProfession.setText(user_member.getProfession());
+            editAddress.setText(user_member.getAddress());
             editAboutMe.setText(user_member.getAbout());
             editPhoneNo.setText(user_member.getPhoneNo());
             editPhoneNo2.setText(user_member.getPhoneNo2());
+
             if (user_member.getSex().equalsIgnoreCase("male")) {
                 radioButtonMale.setChecked(true);
             } else {
                 radioButtonFemale.setChecked(true);
             }
+
             String location = user_member.getLocation();
-            ArrayAdapter spinnerAdapter = (ArrayAdapter) spinner.getAdapter();
-            int spinnerPosition = spinnerAdapter.getPosition(location);
-            spinner.setSelection(spinnerPosition);
+            ArrayAdapter locationSpinnerAdapter = (ArrayAdapter) spinnerLocation.getAdapter();
+            int locationSpinnerPosition = locationSpinnerAdapter.getPosition(location);
+            spinnerLocation.setSelection(locationSpinnerPosition);
+            
+            String profession = user_member.getProfession();
+            ArrayAdapter professionSpinnerAdapter = (ArrayAdapter) spinnerProfession.getAdapter();
+            int professionSpinnerPosition = professionSpinnerAdapter.getPosition(profession);
+            spinnerProfession.setSelection(professionSpinnerPosition);
 
         } catch (Exception e) {
 
@@ -195,11 +192,12 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 //        }
 
         String mName = editName.getText().toString();
-        String location = spinner.getSelectedItem().toString();
-        String profession = editProfession.getText().toString();
+        String location = spinnerLocation.getSelectedItem().toString();
+        String profession = spinnerProfession.getSelectedItem().toString();
         String about = editAboutMe.getText().toString();
         String phoneNo = editPhoneNo.getText().toString();
         String phoneNo2 = editPhoneNo2.getText().toString();
+        String address = editAddress.getText().toString();
 
         Picasso.get().load(mUri).into(usrImage);
 
@@ -247,10 +245,12 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                             profile.put("profile images", "default");
                             profile.put("phoneNo", phoneNo);
                             profile.put("phoneNo2", phoneNo2);
+                            profile.put("address", address);
 
                             user_member.setmName(mName);
                             user_member.setSex(sex);
                             user_member.setLocation(location);
+                            user_member.setAddress(address);
                             user_member.setProfession(profession);
                             user_member.setPhoneNo(phoneNo);
                             user_member.setPhoneNo2(phoneNo2);
@@ -291,6 +291,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 user_member.setmName(mName);
                 user_member.setSex(sex);
                 user_member.setLocation(location);
+                user_member.setAddress(address);
                 user_member.setProfession(profession);
                 user_member.setPhoneNo(phoneNo);
                 user_member.setPhoneNo2(phoneNo2);

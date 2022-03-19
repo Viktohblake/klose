@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.gridviewimagepicker.UploadsFragment;
+import com.gridviewimagepicker.fragments.UploadsFragment;
 import com.gridviewimagepicker.R;
 
 public class ImagePage extends Fragment {

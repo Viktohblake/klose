@@ -1,12 +1,21 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
+import com.gridviewimagepicker.R;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -15,7 +24,6 @@ public class ImageAdapter extends BaseAdapter {
     Context context;
     public ArrayList<String> imageList;
     LayoutInflater layoutInflater;
-    private int selectedPosition = -1;
 
     public ImageAdapter() {
     }
@@ -53,11 +61,15 @@ public class ImageAdapter extends BaseAdapter {
 
         Picasso.get().load(image).fit().centerCrop().into(imageView);
 
-        return view;
-    }
+        VideoView videoView = (VideoView) view.findViewById(R.id.videoUploads);
+        videoView.setVideoURI(Uri.parse(image));
+        videoView.getDuration();
+        videoView.setBackgroundColor(Color.TRANSPARENT);
+        videoView.setZOrderOnTop(true);
+        videoView.start();
+        videoView.requestFocus();
 
-    public void setSelectedPosition(int i) {
-        selectedPosition = i;
+        return view;
     }
 
 }

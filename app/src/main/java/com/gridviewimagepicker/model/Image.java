@@ -1,4 +1,4 @@
-package com.gridviewimagepicker;
+package com.gridviewimagepicker.model;
 
 public class Image {
     private String imageUrl;

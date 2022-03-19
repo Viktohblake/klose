@@ -4,7 +4,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 xmlns:tools="http://schemas.android.com/tools"
-tools:context=".FragmentUserProfile">
+tools:context=".fragments.FragmentUserProfile">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -14,7 +14,7 @@ tools:context=".FragmentUserProfile">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="330dp">
+        android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/settingsCardId"
@@ -54,7 +54,7 @@ tools:context=".FragmentUserProfile">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/gradientbackground"
             android:orientation="vertical">
 
@@ -101,8 +101,8 @@ tools:context=".FragmentUserProfile">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/aboutTextCardID"
@@ -118,6 +118,7 @@ tools:context=".FragmentUserProfile">
                         android:id="@+id/cardDescId"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:background="@color/white"
                         android:orientation="vertical">
 
@@ -201,6 +202,27 @@ tools:context=".FragmentUserProfile">
 
             <TextView
                 android:id="@+id/locationID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_baseline_location_city_24" />
+
+            <TextView
+                android:id="@+id/addressID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -321,6 +343,24 @@ tools:context=".FragmentUserProfile">
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailCardViewID">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/locationBtnID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:padding="10dp"
+            android:text="LOCATION"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
         </TextView>
 

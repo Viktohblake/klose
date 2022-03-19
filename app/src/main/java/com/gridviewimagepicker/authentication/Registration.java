@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.gridviewimagepicker.EditProfileActivity;
+import com.gridviewimagepicker.activities.EditProfileActivity;
 import com.gridviewimagepicker.R;
 
 public class Registration extends AppCompatActivity {
