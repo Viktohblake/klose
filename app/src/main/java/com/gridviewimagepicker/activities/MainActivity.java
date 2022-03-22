@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,7 +30,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_main);
+
+//        ViewGroup container = binding.container;
+//
+//        container.addView(new View(this) {
+//            @Override
+//            protected void onConfigurationChanged(Configuration newConfig) {
+//                super.onConfigurationChanged(newConfig);
+//                computeWindowSizeClasses();
+//            }
+//        });
+
+//        computeWindowSizeClasses();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,6 +102,37 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         return false;
     }
+
+//    private void computeWindowSizeClasses() {
+//        WindowMetrics metrics = WindowMetricsCalculator.getOrCreate()
+//                .computeCurrentWindowMetrics(this);
+//
+//        float widthDp = metrics.getBounds().width() /
+//                getResources().getDisplayMetrics().density;
+//        WindowSizeClass widthWindowSizeClass;
+//
+//        if (widthDp < 600f) {
+//            widthWindowSizeClass = WindowSizeClass.COMPACT;
+//        } else if (widthDp < 840f) {
+//            widthWindowSizeClass = WindowSizeClass.MEDIUM;
+//        } else {
+//            widthWindowSizeClass = WindowSizeClass.EXPANDED;
+//        }
+//
+//        float heightDp = metrics.getBounds().height() /
+//                getResources().getDisplayMetrics().density;
+//        WindowSizeClass heightWindowSizeClass;
+//
+//        if (heightDp < 480f) {
+//            heightWindowSizeClass = WindowSizeClass.COMPACT;
+//        } else if (heightDp < 900f) {
+//            heightWindowSizeClass = WindowSizeClass.MEDIUM;
+//        } else {
+//            heightWindowSizeClass = WindowSizeClass.EXPANDED;
+//        }
+//
+//        // Use widthWindowSizeClass and heightWindowSizeClass
+//    }
 
     @Override
     public void onBackPressed() {
