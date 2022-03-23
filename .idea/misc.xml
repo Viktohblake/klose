@@ -13,32 +13,33 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout-sw480dp/fragment_userprofile.xml" value="0.15703125" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout-sw600dp/fragment_userprofile.xml" value="0.15703125" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout-sw720dp/fragment_userprofile.xml" value="0.15703125" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/activity_edit_profile.xml" value="0.33" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/activity_edit_profile.xml" value="0.1718683197947841" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/activity_main.xml" value="0.12" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/activity_pager.xml" value="0.14537037037037037" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/activity_splashscreen.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/activity_user_profile.xml" value="0.22" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/change_password.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/changepassword_dialog.xml" value="0.25" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/forget_password.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/forget_password.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_allusers.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_category.xml" value="0.25" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_category.xml" value="0.33" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_empty.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_gallery.xml" value="0.22" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_image.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_settings.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_uploads.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_userprofile.xml" value="0.1718683197947841" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_userprofile.xml" value="0.11631944444444445" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/fragment_video.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/gridview_layout.xml" value="0.22" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/images_list.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/images_list.xml" value="0.22" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/location.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/user_login.xml" value="0.22" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/user_registration.xml" value="0.22" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/userlist_layout.xml" value="0.33" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/user_login.xml" value="0.21" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/user_registration.xml" value="0.33" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/layout/userlist_layout.xml" value="0.18" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/menu/add_uploads_menu.xml" value="0.25" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/menu/popup_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/GridViewImagePicker/app/src/main/res/menu/user_options_menu.xml" value="0.25" />
         <entry key="..\:/Users/hp/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.20416666666666666" />
       </map>
     </option>

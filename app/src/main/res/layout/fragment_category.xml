@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Painter" />
 
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Carpentry" />
 
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Laundry Personnel" />
 
@@ -182,7 +182,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Content Writer" />
 
@@ -227,7 +227,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Electrician" />
 
@@ -272,7 +272,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Programmer" />
 
@@ -317,7 +317,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Web Designer" />
 
@@ -362,7 +362,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Plumber" />
 
@@ -407,7 +407,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Brick Layer" />
 
@@ -452,7 +452,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Furniture" />
 
@@ -497,7 +497,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textFontWeight="600"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:text="Teacher" />
 

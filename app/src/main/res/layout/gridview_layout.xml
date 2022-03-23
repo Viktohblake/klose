@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numColumns="2"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
+        android:verticalSpacing="@dimen/_10sdp"
+        android:horizontalSpacing="@dimen/_10sdp"
         android:listSelector="#673AB7"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

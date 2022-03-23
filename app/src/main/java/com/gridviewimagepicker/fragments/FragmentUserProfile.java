@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -76,14 +80,14 @@ public class FragmentUserProfile extends Fragment {
         usrAddress = view.findViewById(R.id.addressID);
 
         verifiedTxt = view.findViewById(R.id.verifiedTxtID);
-//        verifyBtn = view.findViewById(R.id.emailVerifyBtn);
+        verifyBtn = view.findViewById(R.id.emailVerifyBtn);
 
-        locationBtn = view.findViewById(R.id.locationBtnID);
-        changePasswordBtn = view.findViewById(R.id.changePasswordBtnID);
+//        locationBtn = view.findViewById(R.id.locationBtnID);
+//        changePasswordBtn = view.findViewById(R.id.changePasswordBtnID);
 
         userDisplayPic = view.findViewById(R.id.user_profilePic);
-        mediaBtn = view.findViewById(R.id.mediaBtnId);
-        settingsButton = view.findViewById(R.id.settingsBtnID);
+//        mediaBtn = view.findViewById(R.id.mediaBtnId);
+//        settingsButton = view.findViewById(R.id.settingsBtnID);
         rootReference = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(getActivity());
@@ -100,42 +104,42 @@ public class FragmentUserProfile extends Fragment {
             }
         });
 
-        mediaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UploadsFragment uploadsFragment = new UploadsFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, uploadsFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+//        mediaBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                UploadsFragment uploadsFragment = new UploadsFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.container, uploadsFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//        });
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user_object", userObject );
-                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//        settingsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("user_object", userObject );
+//                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
 
-        locationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SeeLocation.class);
-                startActivity(intent);
-            }
-        });
+//        locationBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), SeeLocation.class);
+//                startActivity(intent);
+//            }
+//        });
 
-        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changePasswordDialog();
-            }
-        });
+//        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                changePasswordDialog();
+//            }
+//        });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         senderId = mFirebaseAuth.getCurrentUser().getUid();
@@ -238,31 +242,31 @@ public class FragmentUserProfile extends Fragment {
 
         if (!user.isEmailVerified()) {
             verifiedTxt.setText("UNVERIFIED");
-            verifiedTxt.setTextColor(Color.parseColor("#E91E63"));
+            verifiedTxt.setTextColor(Color.parseColor("#ED0018"));
             verifiedTxt.setVisibility(View.VISIBLE);
-//            verifyBtn.setVisibility(View.VISIBLE);
+            verifyBtn.setVisibility(View.VISIBLE);
 
-//            verifyBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//                            Toast.makeText(v.getContext(), "Verification link was sent to the email address", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.i("tag", "onFailure: email not sent" + e.getMessage());
-//                        }
-//                    });
-//                }
-//            });
+            verifyBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(v.getContext(), "Verification link was sent to the email address", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.i("tag", "onFailure: email not sent" + e.getMessage());
+                        }
+                    });
+                }
+            });
         } else if(user.isEmailVerified()){
             verifyBtn.setVisibility(View.GONE);
             verifiedTxt.setText("VERIFIED");
-            verifiedTxt.setTextColor(Color.parseColor("#1FE427"));
+            verifiedTxt.setTextColor(Color.parseColor("#07780C"));
         }
 
         DatabaseReference rootReference;
@@ -302,6 +306,43 @@ public class FragmentUserProfile extends Fragment {
     public void onResume(){
         super.onResume();
         ((MainActivity) getActivity()).setActionBarTitle("Profile");
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.user_options_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.editProfile:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user_object", userObject );
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                return true;
+
+            case R.id.changePassword:
+                changePasswordDialog();
+                return true;
+
+            case R.id.upgradePremium:
+                return true;
+
+            default:
+                break;
+        }
+        return false;
     }
 
 }

@@ -7,8 +7,8 @@
     android:gravity="center">
 
         <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
             android:layout_gravity="center"
             android:src="@drawable/hookuplogo" />
 
@@ -19,6 +19,6 @@
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:text="APP NAME"
-            android:textSize="23sp" />
+            android:textSize="@dimen/_18ssp" />
 
 </LinearLayout>

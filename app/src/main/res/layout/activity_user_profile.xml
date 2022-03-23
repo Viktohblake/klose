@@ -31,7 +31,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="380dp">
+            android:layout_height="@dimen/_290sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,16 +40,16 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_35sdp"
-                    app:cardCornerRadius="@dimen/_75sdp">
+                    android:layout_marginTop="@dimen/_30sdp"
+                    app:cardCornerRadius="@dimen/_60sdp">
 
                     <ImageView
                         android:id="@+id/userProfileImage"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
+                        android:layout_width="@dimen/_120sdp"
+                        android:layout_height="@dimen/_120sdp"
                         android:layout_gravity="center_horizontal"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_baseline_person_24" />
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:textColor="#fff"
                     android:textSize="21sp"
                     android:textStyle="bold" />
@@ -85,7 +85,7 @@
                         android:id="@+id/goToImagePage"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:layout_height="match_parent">
 
@@ -93,14 +93,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Images"
-                            android:textSize="20sp" />
+                            android:textSize="@dimen/_15ssp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="11"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/_15ssp"
                             android:paddingTop="@dimen/_10sdp"
                             android:textColor="@color/design_default_color_primary"/>
 
@@ -110,21 +110,21 @@
                         android:id="@+id/goToVideoPage"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:layout_height="match_parent">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Videos"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/_15ssp"
                             />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3"
                             android:textStyle="bold"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/_15ssp"
                             android:paddingTop="@dimen/_10sdp"
                             android:textColor="@color/design_default_color_primary"/>
 
@@ -180,7 +180,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_20sdp">
 
@@ -201,7 +201,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_20sdp">
 
@@ -222,7 +222,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/_20sdp">
 
@@ -247,7 +247,7 @@
                 android:layout_gravity="center"
                 android:text="About Me:"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold">
 
             </TextView>
@@ -257,7 +257,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_60sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_60sdp"
                 android:padding="@dimen/_10sdp"
                 app:cardBackgroundColor="@color/white"
@@ -269,7 +269,7 @@
                 <LinearLayout
                     android:id="@+id/cardDescId"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical">
 
@@ -279,9 +279,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
+                        android:padding="@dimen/_5sdp"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/_12ssp"
                         android:textStyle="normal" />
 
                 </LinearLayout>
