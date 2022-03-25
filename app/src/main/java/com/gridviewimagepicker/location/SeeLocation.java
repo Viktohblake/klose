@@ -25,7 +25,12 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.model.Users;
 
 public class SeeLocation extends AppCompatActivity {
 
@@ -50,6 +55,10 @@ public class SeeLocation extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUser = user.getUid();
+
         // check if permissions are given
         if (checkPermissions()) {
 
@@ -69,6 +78,24 @@ public class SeeLocation extends AppCompatActivity {
                         } else {
                             latitudeTxt.setText(location.getLatitude() + "");
                             longitudeTxt.setText(location.getLongitude() + "");
+
+                            Users users = new Users(
+                                    location.getLatitude(), location.getLongitude()
+                            );
+
+                            FirebaseDatabase.getInstance().getReference("Users").child(currentUser).child("Current Location")
+                                    .setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(), "Location saved to firebase",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else{
+                                        Toast.makeText(getApplicationContext(), "Location not saved to firebase",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         }
                     }
                 });
@@ -82,6 +109,7 @@ public class SeeLocation extends AppCompatActivity {
             // request for permissions
             requestPermissions();
         }
+
     }
 
     @SuppressLint("MissingPermission")

@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Users implements Serializable {
     String mName, userid, Uri, name, sex, location, phoneNo, phoneNo2, profession, about, address;
+    double longitude, latitude;
 
     public Users() {}
 
@@ -21,6 +22,11 @@ public class Users implements Serializable {
         this.profession = profession;
         this.about = about;
         this.address = address;
+    }
+
+    public Users(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getmName() {
@@ -109,5 +115,21 @@ public class Users implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

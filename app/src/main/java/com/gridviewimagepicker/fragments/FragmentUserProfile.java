@@ -82,11 +82,11 @@ public class FragmentUserProfile extends Fragment {
         verifiedTxt = view.findViewById(R.id.verifiedTxtID);
         verifyBtn = view.findViewById(R.id.emailVerifyBtn);
 
-//        locationBtn = view.findViewById(R.id.locationBtnID);
+        locationBtn = view.findViewById(R.id.locationBtnID);
 //        changePasswordBtn = view.findViewById(R.id.changePasswordBtnID);
 
         userDisplayPic = view.findViewById(R.id.user_profilePic);
-//        mediaBtn = view.findViewById(R.id.mediaBtnId);
+        mediaBtn = view.findViewById(R.id.mediaBtnId);
 //        settingsButton = view.findViewById(R.id.settingsBtnID);
         rootReference = FirebaseDatabase.getInstance().getReference();
 
@@ -104,16 +104,16 @@ public class FragmentUserProfile extends Fragment {
             }
         });
 
-//        mediaBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UploadsFragment uploadsFragment = new UploadsFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.container, uploadsFragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        });
+        mediaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadsFragment uploadsFragment = new UploadsFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, uploadsFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
 //        settingsButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -126,13 +126,13 @@ public class FragmentUserProfile extends Fragment {
 //            }
 //        });
 
-//        locationBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(), SeeLocation.class);
-//                startActivity(intent);
-//            }
-//        });
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SeeLocation.class);
+                startActivity(intent);
+            }
+        });
 
 //        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override

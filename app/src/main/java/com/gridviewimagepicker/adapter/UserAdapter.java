@@ -13,13 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.gridviewimagepicker.R;
 import com.gridviewimagepicker.activities.UserProfileActivity;
 import com.gridviewimagepicker.model.Users;
 import com.squareup.picasso.Picasso;
 
 public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.usersViewholder> {
-//
+
+    FirebaseAuth firebaseAuth;
+
     public UserAdapter(@NonNull FirebaseRecyclerOptions<Users> options) {
         super(options);
     }
@@ -41,6 +45,15 @@ public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.user
         holder.userName.setText(model.getmName());
         holder.userLocation.setText(model.getLocation());
         holder.userProfession.setText(model.getProfession());
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+//        if (firebaseUser != null) {
+//            holder.itemView.setVisibility(View.GONE);
+//        } else {
+//            holder.itemView.setVisibility(View.VISIBLE);
+//        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
