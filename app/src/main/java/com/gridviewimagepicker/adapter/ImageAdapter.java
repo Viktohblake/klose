@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,13 +62,19 @@ public class ImageAdapter extends BaseAdapter {
 
         Picasso.get().load(image).fit().centerCrop().into(imageView);
 
-        VideoView videoView = (VideoView) view.findViewById(R.id.videoUploads);
-        videoView.setVideoURI(Uri.parse(image));
-        videoView.getDuration();
-        videoView.setBackgroundColor(Color.TRANSPARENT);
-        videoView.setZOrderOnTop(true);
-        videoView.start();
-        videoView.requestFocus();
+//        else {
+//            view = layoutInflater2.from(context).inflate(R.layout.video_list, viewGroup, false);
+//
+//            String image = imageList.get(i);
+//
+//            VideoView videoView = (VideoView) view.findViewById(R.id.videoUploads);
+//            videoView.setVideoURI(Uri.parse(image));
+//            videoView.getDuration();
+//            videoView.setBackgroundColor(Color.TRANSPARENT);
+//            videoView.setZOrderOnTop(true);
+//            videoView.start();
+//            videoView.requestFocus();
+//        }
 
         return view;
     }

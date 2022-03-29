@@ -1,6 +1,5 @@
 package com.gridviewimagepicker.model;
 
-import android.net.Uri;
 import java.io.Serializable;
 
 public class Users implements Serializable {

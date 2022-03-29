@@ -3,6 +3,7 @@ package com.gridviewimagepicker.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,13 +19,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.fragments.UploadsFragment;
 import com.gridviewimagepicker.pager.PagerHome;
 import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends AppCompatActivity {
 
 
-    private String recieverUserId;
+    private String receiverUserId;
     Toolbar toolbar;
     TextView userName, userPhoneNo, userPhoneNo2, userLocation, userProfession, userSex, userAbout;
     ImageView userImage;
@@ -75,9 +77,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
         userImage = findViewById(R.id.userProfileImage);
 
-        recieverUserId = getIntent().getExtras().get("user_id").toString();
+        receiverUserId = getIntent().getExtras().get("user_id").toString();
 
-        Toast.makeText(this, "This user id is" + recieverUserId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "This user id is" + recieverUserId, Toast.LENGTH_SHORT).show();
 
         initView();
 
@@ -87,7 +89,7 @@ public class UserProfileActivity extends AppCompatActivity {
         DatabaseReference databaseReference;
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        databaseReference = firebaseDatabase.getReference("Users").child(recieverUserId);
+        databaseReference = firebaseDatabase.getReference("Users").child(receiverUserId);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

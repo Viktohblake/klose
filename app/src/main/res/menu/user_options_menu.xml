@@ -21,6 +21,11 @@
                 android:id="@+id/upgradePremium"
                 android:title="Upgrade To Premium"
                 android:icon="@drawable/ic_baseline_upgrade_24"/>
+
+            <item
+                android:id="@+id/logout"
+                android:title="Logout"
+                android:icon="@drawable/logout"/>
         </menu>
     </item>
 

@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.gridviewimagepicker.R;
 import com.gridviewimagepicker.fragments.UploadsFragment;
+import com.gridviewimagepicker.fragments.UsersUploadsFragment;
 
 public class VideoPage extends Fragment {
 
@@ -22,9 +23,9 @@ public class VideoPage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UploadsFragment uploadsFragment = new UploadsFragment();
+        UsersUploadsFragment usersUploadsFragment = new UsersUploadsFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.video_fragment, uploadsFragment).commit();
+        fragmentTransaction.replace(R.id.video_fragment, usersUploadsFragment).commit();
     }
 
     @Override

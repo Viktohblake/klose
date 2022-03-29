@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,11 +37,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.gridviewimagepicker.activities.UserProfileActivity;
 import com.gridviewimagepicker.adapter.ImageAdapter;
 import com.gridviewimagepicker.activities.MainActivity;
 import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.pager.PagerHome;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -72,12 +77,15 @@ public class UploadsFragment extends Fragment {
         imageAdapter = new ImageAdapter();
 
         imageList = new ArrayList<String>();
-//        imageView = view.findViewById(R.id.selectedImagee);
 
         gridView = (GridView) view.findViewById(R.id.gridview);
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = user.getUid();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child(currentUserId);
 
         valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,12 +96,11 @@ public class UploadsFragment extends Fragment {
                     imageList.add(imageUrl);
                 }
 
-                imageAdapter = new ImageAdapter(getActivity(), imageList);
+                imageAdapter = new ImageAdapter(getContext(), imageList);
 
                 gridView.setAdapter(imageAdapter);
 
                 gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
                     public boolean onItemLongClick(AdapterView<?> parent, View view,
                                                    int position, long id) {
                         PopupMenu popupMenu = new PopupMenu(getActivity(), view);
@@ -117,6 +124,14 @@ public class UploadsFragment extends Fragment {
                     }
                 });
 
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Log.e("onItemClick", "onItemClick:" + i);
+                        viewImage(i);
+                    }
+                });
+
                 imageAdapter.notifyDataSetChanged();
             }
 
@@ -128,11 +143,15 @@ public class UploadsFragment extends Fragment {
         });
     }
 
+    public void viewImage(int position) {
+        String selectedImage = imageAdapter.imageList.get(position);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(selectedImage));
+        getActivity().startActivity(intent);
+    }
+
     public void deleteImage(int position) {
-
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-
-//        imageAdapter = new ImageAdapter(getActivity(), imageList);
 
         String selectedItem = imageAdapter.imageList.remove(position);
 
@@ -147,6 +166,7 @@ public class UploadsFragment extends Fragment {
                 if (!task.isSuccessful()) {
                     Log.i("GRIDvACT", "Deleted hopefully");
                     imageAdapter.imageList.add(position, selectedItem);
+                    imageAdapter.notifyDataSetChanged();
                 } else {
                     databaseReference.equalTo(selectedItem);
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -177,12 +197,6 @@ public class UploadsFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-        ((MainActivity) getActivity()).setActionBarTitle("Uploads");
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.add_uploads_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -195,7 +209,8 @@ public class UploadsFragment extends Fragment {
             case R.id.add:
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("*/*");
-                String[] mimeTypes = {"image/*", "video/*"};
+                String[] mimeTypes = {"image/*"};
+//                String[] mimeTypes = {"image/*", "video/*"};
                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                 startActivityForResult(intent, PICK_FILE);
 
@@ -254,6 +269,8 @@ public class UploadsFragment extends Fragment {
                             transaction.addToBackStack(null);
                             transaction.commit();
 
+                            imageAdapter.notifyDataSetChanged();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -274,4 +291,11 @@ public class UploadsFragment extends Fragment {
                     });
         }
     }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        ((MainActivity) getActivity()).setActionBarTitle("Gallery");
+//    }
+
 }

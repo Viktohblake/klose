@@ -41,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.gridviewimagepicker.activities.EditProfileActivity;
 import com.gridviewimagepicker.activities.MainActivity;
 import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.authentication.Login;
 import com.gridviewimagepicker.location.SeeLocation;
 import com.gridviewimagepicker.model.Users;
 import com.squareup.picasso.Picasso;
@@ -86,7 +87,7 @@ public class FragmentUserProfile extends Fragment {
 //        changePasswordBtn = view.findViewById(R.id.changePasswordBtnID);
 
         userDisplayPic = view.findViewById(R.id.user_profilePic);
-        mediaBtn = view.findViewById(R.id.mediaBtnId);
+//        mediaBtn = view.findViewById(R.id.mediaBtnId);
 //        settingsButton = view.findViewById(R.id.settingsBtnID);
         rootReference = FirebaseDatabase.getInstance().getReference();
 
@@ -104,16 +105,16 @@ public class FragmentUserProfile extends Fragment {
             }
         });
 
-        mediaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UploadsFragment uploadsFragment = new UploadsFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, uploadsFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+//        mediaBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                UploadsFragment uploadsFragment = new UploadsFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.container, uploadsFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//        });
 
 //        settingsButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -302,6 +303,13 @@ public class FragmentUserProfile extends Fragment {
 
     }
 
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getActivity(), Login.class);
+        startActivity(intent);
+        Toast.makeText(getActivity(), "Logged out successfully", Toast.LENGTH_SHORT);
+    }
+
     @Override
     public void onResume(){
         super.onResume();
@@ -337,6 +345,10 @@ public class FragmentUserProfile extends Fragment {
                 return true;
 
             case R.id.upgradePremium:
+                return true;
+
+            case R.id.logout:
+                logout();
                 return true;
 
             default:

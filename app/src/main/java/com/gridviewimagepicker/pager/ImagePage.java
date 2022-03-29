@@ -1,5 +1,6 @@
 package com.gridviewimagepicker.pager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.gridviewimagepicker.fragments.UploadsFragment;
 import com.gridviewimagepicker.R;
+import com.gridviewimagepicker.fragments.UsersUploadsFragment;
 
 public class ImagePage extends Fragment {
 
@@ -32,10 +34,9 @@ public class ImagePage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UploadsFragment uploadsFragment = new UploadsFragment();
+        UsersUploadsFragment usersUploadsFragment = new UsersUploadsFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.image_fragment, uploadsFragment).commit();
-
+        fragmentTransaction.replace(R.id.image_fragment, usersUploadsFragment).commit();
     }
 
     @Override

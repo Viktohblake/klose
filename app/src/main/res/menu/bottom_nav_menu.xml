@@ -9,14 +9,20 @@
     <item
         android:id="@+id/users"
         android:enabled="true"
-        android:title="Users"
+        android:title="All Users"
         android:icon="@drawable/ic_baseline_people_24" />
+
+    <item
+        android:id="@+id/usersbylocation"
+        android:enabled="true"
+        android:title="By Location"
+        android:icon="@drawable/ic_location_24" />
 
     <item
         android:id="@+id/uploads"
         android:enabled="true"
-        android:title="Uploads"
-        android:icon="@drawable/ic_baseline_favorite_24" />
+        android:title="Gallery"
+        android:icon="@drawable/ic_baseline_media" />
 
     <item
         android:id="@+id/category"
@@ -24,9 +30,4 @@
         android:title="Category"
         android:icon="@drawable/ic_baseline_category_24"/>
 
-    <item
-        android:id="@+id/logout"
-        android:enabled="true"
-        android:title="Logout"
-        android:icon="@drawable/logout" />
 </menu>

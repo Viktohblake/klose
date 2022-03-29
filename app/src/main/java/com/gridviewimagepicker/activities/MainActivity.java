@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.gridviewimagepicker.R;
 import com.gridviewimagepicker.authentication.Login;
+import com.gridviewimagepicker.fragments.ByLocationFragment;
 import com.gridviewimagepicker.fragments.CategoryFragment;
 import com.gridviewimagepicker.fragments.FragmentUserProfile;
 import com.gridviewimagepicker.fragments.GalleryFragment;
@@ -31,21 +32,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        getSupportActionBar().hide();
-
         setContentView(R.layout.activity_main);
-
-//        ViewGroup container = binding.container;
-//
-//        container.addView(new View(this) {
-//            @Override
-//            protected void onConfigurationChanged(Configuration newConfig) {
-//                super.onConfigurationChanged(newConfig);
-//                computeWindowSizeClasses();
-//            }
-//        });
-
-//        computeWindowSizeClasses();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,12 +45,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
-        bottomNavigationView.getOrCreateBadge(R.id.category).setNumber(11);
+//        bottomNavigationView.getOrCreateBadge(R.id.category).setNumber(11);
 
     }
 
     FragmentUserProfile fragmentUserProfile = new FragmentUserProfile();
-    GalleryFragment galleryFragment = new GalleryFragment();
+    ByLocationFragment byLocationFragment = new ByLocationFragment();
     UsersFragment usersFragment = new UsersFragment();
     CategoryFragment categoryFragment = new CategoryFragment();
     UploadsFragment uploadsFragment = new UploadsFragment();
@@ -82,17 +69,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .replace(R.id.container, usersFragment).commit();
                 return true;
 
+            case R.id.usersbylocation:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container,  byLocationFragment).commit();
+                return true;
+
             case R.id.uploads:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, uploadsFragment).commit();
-                return true;
-
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(MainActivity.this, Login.class);
-                startActivity(intent);
-                finish();
-                Toast.makeText(MainActivity.this, "Logged out successfully", Toast.LENGTH_SHORT);
                 return true;
 
             case R.id.category:
@@ -102,37 +86,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         return false;
     }
-
-//    private void computeWindowSizeClasses() {
-//        WindowMetrics metrics = WindowMetricsCalculator.getOrCreate()
-//                .computeCurrentWindowMetrics(this);
-//
-//        float widthDp = metrics.getBounds().width() /
-//                getResources().getDisplayMetrics().density;
-//        WindowSizeClass widthWindowSizeClass;
-//
-//        if (widthDp < 600f) {
-//            widthWindowSizeClass = WindowSizeClass.COMPACT;
-//        } else if (widthDp < 840f) {
-//            widthWindowSizeClass = WindowSizeClass.MEDIUM;
-//        } else {
-//            widthWindowSizeClass = WindowSizeClass.EXPANDED;
-//        }
-//
-//        float heightDp = metrics.getBounds().height() /
-//                getResources().getDisplayMetrics().density;
-//        WindowSizeClass heightWindowSizeClass;
-//
-//        if (heightDp < 480f) {
-//            heightWindowSizeClass = WindowSizeClass.COMPACT;
-//        } else if (heightDp < 900f) {
-//            heightWindowSizeClass = WindowSizeClass.MEDIUM;
-//        } else {
-//            heightWindowSizeClass = WindowSizeClass.EXPANDED;
-//        }
-//
-//        // Use widthWindowSizeClass and heightWindowSizeClass
-//    }
 
     @Override
     public void onBackPressed() {

@@ -17,8 +17,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.gridviewimagepicker.R;
 import com.gridviewimagepicker.activities.UserProfileActivity;
+import com.gridviewimagepicker.fragments.UsersUploadsFragment;
 import com.gridviewimagepicker.model.Users;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.usersViewholder> {
 
@@ -63,8 +66,25 @@ public class UserAdapter extends FirebaseRecyclerAdapter<Users, UserAdapter.user
                 Intent profileIntent = new Intent(view.getContext(), UserProfileActivity.class);
                 profileIntent.putExtra("user_id", user_id);
                 view.getContext().startActivity(profileIntent);
+
+                String id = getRef(position).getKey().toString();
+
+                Intent viewImage = new Intent(view.getContext(), UsersUploadsFragment.class);
+                viewImage.putExtra("id", id);
+                view.getContext().startService(viewImage);
             }
         });
+
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String user_id = getRef(position).getKey().toString();
+//
+//                Intent profileIntent = new Intent(view.getContext(), UsersUploadsFragment.class);
+//                profileIntent.putExtra("user_id", user_id);
+//                view.getContext().startActivity(profileIntent);
+//            }
+//        });
     }
 
     public class usersViewholder extends RecyclerView.ViewHolder {

@@ -17,7 +17,7 @@
             android:id="@+id/toolbarUserProfile"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/design_default_color_primary" >
+            android:background="@color/purple_500" >
 
             <TextView
                 android:id="@+id/custom_title"
@@ -102,7 +102,7 @@
                             android:textStyle="bold"
                             android:textSize="@dimen/_15ssp"
                             android:paddingTop="@dimen/_10sdp"
-                            android:textColor="@color/design_default_color_primary"/>
+                            android:textColor="@color/purple_500"/>
 
                     </LinearLayout>
 
@@ -126,7 +126,7 @@
                             android:textStyle="bold"
                             android:textSize="@dimen/_15ssp"
                             android:paddingTop="@dimen/_10sdp"
-                            android:textColor="@color/design_default_color_primary"/>
+                            android:textColor="@color/purple_500"/>
 
                     </LinearLayout>
 

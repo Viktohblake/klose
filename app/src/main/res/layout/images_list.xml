@@ -10,9 +10,9 @@
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_150sdp" />
 
-        <VideoView
-            android:id="@+id/videoUploads"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="@dimen/_150sdp" />
+<!--        <VideoView-->
+<!--            android:id="@+id/videoUploads"-->
+<!--            android:layout_width="@dimen/_150sdp"-->
+<!--            android:layout_height="@dimen/_150sdp" />-->
 
 </FrameLayout>
