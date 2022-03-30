@@ -32,7 +32,6 @@ public class ImageAdapter extends BaseAdapter {
     public ImageAdapter(Context context, ArrayList<String> imageList) {
         this.context = context;
         this.imageList = imageList;
-        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override

@@ -49,23 +49,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         linearLayout = findViewById(R.id.goToImagePage);
 
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserProfileActivity.this, PagerHome.class);
-                startActivity(intent);
-            }
-        });
-
         linearLayout2 = findViewById(R.id.goToVideoPage);
-
-        linearLayout2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserProfileActivity.this, PagerHome.class);
-                startActivity(intent);
-            }
-        });
 
         userName = findViewById(R.id.userProfileName);
         userPhoneNo = findViewById(R.id.userProfilePhoneNo);
@@ -74,10 +58,27 @@ public class UserProfileActivity extends AppCompatActivity {
         userProfession = findViewById(R.id.userProfileProfession);
         userSex = findViewById(R.id.userProfileSex);
         userAbout = findViewById(R.id.userAboutMe);
-
         userImage = findViewById(R.id.userProfileImage);
 
         receiverUserId = getIntent().getExtras().get("user_id").toString();
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), PagerHome.class);
+                intent.putExtra("user_id", receiverUserId);
+                startActivity(intent);
+            }
+        });
+
+        linearLayout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), PagerHome.class);
+                intent.putExtra("user_id", receiverUserId);
+                startActivity(intent);
+            }
+        });
 
 //        Toast.makeText(this, "This user id is" + recieverUserId, Toast.LENGTH_SHORT).show();
 

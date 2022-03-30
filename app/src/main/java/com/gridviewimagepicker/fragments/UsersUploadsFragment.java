@@ -32,7 +32,8 @@ public class UsersUploadsFragment extends Fragment {
     private DatabaseReference databaseReference;
     private FirebaseStorage firebaseStorage;
     private ValueEventListener valueEventListener;
-    private String recieverUserId;
+
+    private String receiverUserId;
     StorageReference storageReference;
 
     ArrayList<String> imageList;
@@ -54,9 +55,7 @@ public class UsersUploadsFragment extends Fragment {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
-//        recieverUserId = getActivity().getIntent().getExtras().get("id").toString();
-
-        String receiverUserId = databaseReference.child("Users").push().getKey();
+        receiverUserId = getActivity().getIntent().getExtras().get("user_id").toString();
 
         Log.i("uid", receiverUserId);
 

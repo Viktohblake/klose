@@ -2,6 +2,7 @@ package com.gridviewimagepicker.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,15 +14,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +39,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -42,6 +50,7 @@ import com.gridviewimagepicker.adapter.ImageAdapter;
 import com.gridviewimagepicker.activities.MainActivity;
 import com.gridviewimagepicker.R;
 import com.gridviewimagepicker.pager.PagerHome;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -49,6 +58,8 @@ import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class UploadsFragment extends Fragment {
     GridView gridView;
@@ -75,7 +86,6 @@ public class UploadsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         imageAdapter = new ImageAdapter();
-
         imageList = new ArrayList<String>();
 
         gridView = (GridView) view.findViewById(R.id.gridview);
@@ -91,13 +101,14 @@ public class UploadsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                imageList.clear();
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String imageUrl = (String) postSnapshot.getValue();
                     imageList.add(imageUrl);
                 }
 
                 imageAdapter = new ImageAdapter(getContext(), imageList);
-
                 gridView.setAdapter(imageAdapter);
 
                 gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -127,7 +138,6 @@ public class UploadsFragment extends Fragment {
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Log.e("onItemClick", "onItemClick:" + i);
                         viewImage(i);
                     }
                 });
@@ -144,20 +154,21 @@ public class UploadsFragment extends Fragment {
     }
 
     public void viewImage(int position) {
+        View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.image_popup, null);
         String selectedImage = imageAdapter.imageList.get(position);
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(selectedImage));
-        getActivity().startActivity(intent);
+        ImageView popupImage = (ImageView) popupView.findViewById(R.id.imagePopup);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(popupView);
     }
 
     public void deleteImage(int position) {
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
         String selectedItem = imageAdapter.imageList.remove(position);
-
         Log.i("GRIDvACT", String.format("UrlToDelete: %s", selectedItem));
 
-        firebaseStorage.getReferenceFromUrl(selectedItem).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        StorageReference storageReference = firebaseStorage.getReferenceFromUrl(selectedItem);
+        storageReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Log.i("GRIDvACT", "got here successfully");
@@ -166,22 +177,22 @@ public class UploadsFragment extends Fragment {
                 if (!task.isSuccessful()) {
                     Log.i("GRIDvACT", "Deleted hopefully");
                     imageAdapter.imageList.add(position, selectedItem);
-                    imageAdapter.notifyDataSetChanged();
                 } else {
-                    databaseReference.equalTo(selectedItem);
-                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    Query query = databaseReference.orderByValue().equalTo(selectedItem);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
-                                appleSnapshot.getRef().removeValue();
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                                postSnapshot.getRef().removeValue();
                             }
                         }
 
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Log.e(TAG, "onCancelled", databaseError.toException());
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e(TAG, "onCancelled", error.toException());
                         }
                     });
+
                 }
 
                 imageAdapter.notifyDataSetChanged();
@@ -239,6 +250,7 @@ public class UploadsFragment extends Fragment {
     }
 
     public void uploadFile() {
+
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading...");
