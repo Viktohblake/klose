@@ -45,6 +45,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.gridviewimagepicker.activities.FullScreenViewActivity;
 import com.gridviewimagepicker.activities.UserProfileActivity;
 import com.gridviewimagepicker.adapter.ImageAdapter;
 import com.gridviewimagepicker.activities.MainActivity;
@@ -154,11 +155,10 @@ public class UploadsFragment extends Fragment {
     }
 
     public void viewImage(int position) {
-        View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.image_popup, null);
-        String selectedImage = imageAdapter.imageList.get(position);
-        ImageView popupImage = (ImageView) popupView.findViewById(R.id.imagePopup);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(popupView);
+        Intent intent = new Intent(getActivity(), FullScreenViewActivity.class);
+        intent.putExtra("fullimagepath", (String) imageAdapter.getItem(position));
+        startActivity(intent);
+
     }
 
     public void deleteImage(int position) {
@@ -240,12 +240,6 @@ public class UploadsFragment extends Fragment {
                 && data != null && data.getData() != null) {
             filePath = data.getData();
             uploadFile();
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
-//                imageView.setImageBitmap(bitmap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         }
     }
 
@@ -304,10 +298,10 @@ public class UploadsFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//        ((MainActivity) getActivity()).setActionBarTitle("Gallery");
-//    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        ((MainActivity) getActivity()).setActionBarTitle("Gallery");
+    }
 
 }

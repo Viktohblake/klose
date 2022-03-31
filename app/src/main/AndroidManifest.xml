@@ -53,7 +53,7 @@
             android:name=".location.SeeLocation"
             android:exported="true" />
         <activity
-            android:name=".fragments.UsersUploadsFragment"
+            android:name=".activities.FullScreenViewActivity"
             android:exported="true" />
     </application>
 

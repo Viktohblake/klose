@@ -83,12 +83,7 @@ public class FragmentUserProfile extends Fragment {
         verifiedTxt = view.findViewById(R.id.verifiedTxtID);
         verifyBtn = view.findViewById(R.id.emailVerifyBtn);
 
-        locationBtn = view.findViewById(R.id.locationBtnID);
-//        changePasswordBtn = view.findViewById(R.id.changePasswordBtnID);
-
         userDisplayPic = view.findViewById(R.id.user_profilePic);
-//        mediaBtn = view.findViewById(R.id.mediaBtnId);
-//        settingsButton = view.findViewById(R.id.settingsBtnID);
         rootReference = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(getActivity());
@@ -104,43 +99,6 @@ public class FragmentUserProfile extends Fragment {
                 startActivityForResult(intent, PICK_FILE);
             }
         });
-
-//        mediaBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UploadsFragment uploadsFragment = new UploadsFragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.container, uploadsFragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        });
-
-//        settingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("user_object", userObject );
-//                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
-
-        locationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SeeLocation.class);
-                startActivity(intent);
-            }
-        });
-
-//        changePasswordBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                changePasswordDialog();
-//            }
-//        });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         senderId = mFirebaseAuth.getCurrentUser().getUid();

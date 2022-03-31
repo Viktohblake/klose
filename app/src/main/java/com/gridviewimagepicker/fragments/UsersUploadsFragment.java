@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.gridviewimagepicker.activities.FullScreenViewActivity;
 import com.gridviewimagepicker.adapter.ImageAdapter;
 import com.gridviewimagepicker.R;
 
@@ -79,6 +80,9 @@ public class UsersUploadsFragment extends Fragment {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Log.e("onItemClick", "onItemClick:" + i);
                         viewImage(i);
+
+                        Intent intent = new Intent(getActivity(), FullScreenViewActivity.class);
+                        intent.putExtra("fullimagepath", (String) imageAdapter.getItem(i));
                     }
                 });
 
@@ -94,10 +98,9 @@ public class UsersUploadsFragment extends Fragment {
     }
 
     public void viewImage(int position) {
-        String selectedImage = imageAdapter.imageList.get(position);
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(selectedImage));
-        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), FullScreenViewActivity.class);
+        intent.putExtra("fullimagepath", (String) imageAdapter.getItem(position));
+        startActivity(intent);
     }
 
 }
