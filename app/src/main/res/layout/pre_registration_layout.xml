@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/_20sdp">
+        android:padding="@dimen/_24sdp">
 
         <ImageView
             android:layout_width="@dimen/_80sdp"
@@ -29,49 +29,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/_60sdp">
+            android:layout_marginTop="@dimen/_100sdp">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <Button
+                android:id="@+id/registerAsWorker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_4sdp"
-                app:boxCornerRadiusBottomStart="@dimen/_15sdp"
-                app:boxCornerRadiusBottomEnd="@dimen/_15sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_15sdp"
-                app:boxCornerRadiusTopStart="@dimen/_15sdp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                android:hint="Email">
+                android:layout_margin="@dimen/_20sdp"
+                android:text="Register As Worker"
+                app:cornerRadius="10dp"
+                android:background="@drawable/button_background"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/reset_mail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reset_pass"
+            <Button
+                android:id="@+id/registerAsEmployer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Reset Password"
-                app:cornerRadius="@dimen/_10sdp" />
+                android:layout_margin="@dimen/_20sdp"
+                android:background="@drawable/button_background"
+                android:text="Register As Employer"
+                app:cornerRadius="10dp" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
-
-    </LinearLayout>
 
     </LinearLayout>
 

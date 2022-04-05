@@ -3,13 +3,13 @@ package com.gridviewimagepicker.model;
 import java.io.Serializable;
 
 public class Users implements Serializable {
-    String mName, userid, Uri, name, sex, location, phoneNo, phoneNo2, profession, about, address;
+    String mName, userid, Uri, name, sex, location, phoneNo, phoneNo2, profession, about, address, role;
     double longitude, latitude;
 
     public Users() {}
 
     public Users(String mName, String userid, String Uri, String name, String sex, String location,
-                 String phoneNo, String phoneNo2, String profession, String about, String address) {
+                 String phoneNo, String phoneNo2, String profession, String about, String address, String role) {
         this.mName = mName;
         this.userid = userid;
         this.Uri = Uri;
@@ -21,6 +21,7 @@ public class Users implements Serializable {
         this.profession = profession;
         this.about = about;
         this.address = address;
+        this.role = role;
     }
 
     public Users(double latitude, double longitude) {
@@ -130,5 +131,13 @@ public class Users implements Serializable {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

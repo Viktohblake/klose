@@ -142,6 +142,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/phoneLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
@@ -178,6 +179,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/locationLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25sdp"
@@ -199,6 +201,29 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/addressLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_20sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/ic_baseline_location_city_24" />
+
+                <TextView
+                    android:id="@+id/userProfileAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/professionLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25sdp"
@@ -220,6 +245,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sexLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_25sdp"

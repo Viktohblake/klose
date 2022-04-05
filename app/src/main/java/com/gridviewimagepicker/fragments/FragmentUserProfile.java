@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +38,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.gridviewimagepicker.activities.EditProfileActivity;
+import com.gridviewimagepicker.activities.EditProfileForEmployer;
 import com.gridviewimagepicker.activities.MainActivity;
 import com.gridviewimagepicker.R;
 import com.gridviewimagepicker.authentication.Login;
@@ -53,12 +56,14 @@ public class FragmentUserProfile extends Fragment {
     private TextView usrName, usrLocation, usrSex, usrAboutMe, usrPhoneNo, usrPhoneNo2, usrProfession, usrAddress,
             verifiedTxt, verifyBtn, upgradePremiumBtn, locationBtn, changePasswordBtn;
     FirebaseAuth mFirebaseAuth;
-    DatabaseReference rootReference;
+    DatabaseReference rootReference, rootReferenceEmployer;
     private static final int PICK_FILE = 1;
     private Uri mUri;
     String senderId;
     Users userObject;
     ProgressDialog progressDialog;
+    LinearLayout addressLinearLayout, locationLinearLayout, phoneLinearLayout, aboutMeLinearLayout,
+            professionLinearLayout, sexLinearLayout;
 
     @Nullable
     @Override
@@ -79,6 +84,13 @@ public class FragmentUserProfile extends Fragment {
         usrProfession = view.findViewById(R.id.userProfessionID);
         usrLocation = view.findViewById(R.id.locationID);
         usrAddress = view.findViewById(R.id.addressID);
+
+        addressLinearLayout = view.findViewById(R.id.addressLinearLayout);
+        locationLinearLayout = view.findViewById(R.id.locationLinearLayout);
+        phoneLinearLayout = view.findViewById(R.id.phoneLinearLayout);
+        aboutMeLinearLayout = view.findViewById(R.id.aboutMeLinearLayout);
+        professionLinearLayout = view.findViewById(R.id.professionLinearLayout);
+        sexLinearLayout = view.findViewById(R.id.sexLinearLayout);
 
         verifiedTxt = view.findViewById(R.id.verifiedTxtID);
         verifyBtn = view.findViewById(R.id.emailVerifyBtn);
@@ -231,6 +243,7 @@ public class FragmentUserProfile extends Fragment {
         DatabaseReference rootReference;
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         Log.i("currentUserId1", currentUserId);
+
         rootReference = firebaseDatabase.getReference("Users").child(currentUserId);
         rootReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -238,6 +251,20 @@ public class FragmentUserProfile extends Fragment {
                 if (!snapshot.exists()) {
                     Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                     startActivity(intent);
+                } else if (snapshot.child("role").exists()) {
+                    addressLinearLayout.setVisibility(View.GONE);
+                    aboutMeLinearLayout.setVisibility(View.GONE);
+                    professionLinearLayout.setVisibility(View.GONE);
+                    sexLinearLayout.setVisibility(View.GONE);
+
+                    userObject = snapshot.getValue(Users.class);
+                    usrName.setText(userObject.getmName());
+                    usrLocation.setText(userObject.getLocation());
+                    usrPhoneNo.setText(userObject.getPhoneNo());
+                    usrPhoneNo2.setText(userObject.getPhoneNo2());
+
+                    Picasso.get().load(userObject.getUri()).into(usrImage);
+
                 } else {
                     userObject = snapshot.getValue(Users.class);
                     usrName.setText(userObject.getmName());
@@ -291,11 +318,36 @@ public class FragmentUserProfile extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.editProfile:
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user_object", userObject );
-                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String currentUserId = user.getUid();
+
+                rootReference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
+
+                rootReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.child("role").exists()) {
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putSerializable("user_object", userObject );
+                            Intent intent1 = new Intent(getActivity(), EditProfileForEmployer.class);
+                            intent1.putExtras(bundle1);
+                            startActivity(intent1);
+                        } else {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("user_object", userObject );
+                            Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 return true;
 
             case R.id.changePassword:

@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,10 +44,11 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditProfileForEmployer extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ImageView profileImage, usrImage;
     private Button saveBtn;
-    private EditText editName, editAddress, editAboutMe, editPhoneNo, editPhoneNo2;
+    private EditText editName, editPhoneNo, editPhoneNo2;
+    private TextView role;
     private Uri mUri;
     private ProgressBar mProgressbar;
     private static final int PICK_IMAGE = 1;
@@ -56,33 +58,24 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     DatabaseReference mDatabaseReference;
     private Users user_member;
     private String currentUserId;
-    private RadioGroup radioGroup;
-    private RadioButton radioButton, radioButtonMale, radioButtonFemale;
-    private Spinner spinnerLocation, spinnerProfession;
+    private Spinner spinnerLocation;
     boolean isNewUpload = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_edit_profile_employer);
 
         user_member = new Users();
         profileImage = findViewById(R.id.profilePic);
         saveBtn = findViewById(R.id.userProfileSaveBtn);
         editName = findViewById(R.id.userNameField);
-        editAddress = findViewById(R.id.userAddressField);
-        editAboutMe = findViewById(R.id.userAboutMeField);
         editPhoneNo = findViewById(R.id.userPhoneNoField);
         editPhoneNo2 = findViewById(R.id.userPhoneNoField2);
         mProgressbar = findViewById(R.id.userProfileProgressBar);
         usrImage = findViewById(R.id.profilePic);
-        radioGroup = findViewById(R.id.radioGroupID);
 
-        radioButtonMale = (RadioButton) findViewById(R.id.radioBtnMale);
-        radioButtonFemale = (RadioButton) findViewById(R.id.radioBtnFemale);
-
-        int selectedId = radioGroup.getCheckedRadioButtonId();
-        radioButton = (RadioButton) findViewById(selectedId);
+        role = findViewById(R.id.role);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("Users");
@@ -101,13 +94,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 startActivityForResult(intent, PICK_IMAGE);
             }
         });
-
-        spinnerProfession = findViewById(R.id.professionSpinnerID);
-        ArrayAdapter<CharSequence> professionAdapter =
-                ArrayAdapter.createFromResource(this, R.array.profession, R.layout.spinner_list_item);
-        professionAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerProfession.setAdapter(professionAdapter);
-        spinnerProfession.setOnItemSelectedListener(this);
 
         spinnerLocation = findViewById(R.id.locationSpinnerID);
         ArrayAdapter<CharSequence> locationAdapter =
@@ -133,31 +119,19 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             Picasso.get().load(user_member.getUri()).into(profileImage);
 
             editName.setText(user_member.getmName());
-            editAddress.setText(user_member.getAddress());
-            editAboutMe.setText(user_member.getAbout());
             editPhoneNo.setText(user_member.getPhoneNo());
             editPhoneNo2.setText(user_member.getPhoneNo2());
 
-            if (user_member.getSex().equalsIgnoreCase("male")) {
-                radioButtonMale.setChecked(true);
-            } else {
-                radioButtonFemale.setChecked(true);
-            }
+            role.setText(user_member.getRole());
 
             String location = user_member.getLocation();
             ArrayAdapter locationSpinnerAdapter = (ArrayAdapter) spinnerLocation.getAdapter();
             int locationSpinnerPosition = locationSpinnerAdapter.getPosition(location);
             spinnerLocation.setSelection(locationSpinnerPosition);
-            
-            String profession = user_member.getProfession();
-            ArrayAdapter professionSpinnerAdapter = (ArrayAdapter) spinnerProfession.getAdapter();
-            int professionSpinnerPosition = professionSpinnerAdapter.getPosition(profession);
-            spinnerProfession.setSelection(professionSpinnerPosition);
 
         } catch (Exception e) {
 
         }
-
     }
 
     private String getFileExt(Uri uri) {
@@ -183,26 +157,17 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void uploadData() {
-        int selectID = radioGroup.getCheckedRadioButtonId();
-        radioButton = findViewById(selectID);
-        String sex = radioButton.getText().toString();
-
-//        if (sex == null) {
-//            return;
-//        }
 
         String mName = editName.getText().toString();
         String location = spinnerLocation.getSelectedItem().toString();
-        String profession = spinnerProfession.getSelectedItem().toString();
-        String about = editAboutMe.getText().toString();
         String phoneNo = editPhoneNo.getText().toString();
         String phoneNo2 = editPhoneNo2.getText().toString();
-        String address = editAddress.getText().toString();
+
+        String role = "Employer";
 
         Picasso.get().load(mUri).into(usrImage);
 
-        if ((!TextUtils.isEmpty(mName) && !TextUtils.isEmpty(profession)
-                && !TextUtils.isEmpty(about) && !TextUtils.isEmpty(phoneNo)
+        if ((!TextUtils.isEmpty(mName) && !TextUtils.isEmpty(phoneNo)
                 && !TextUtils.isEmpty(location))
                 && (isNewUpload ? mUri != null : true)) {
 
@@ -235,28 +200,22 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
                             Map<String, String> profile = new HashMap<>();
                             profile.put("mName", mName);
-                            profile.put("sex", sex);
                             profile.put("location", location);
-                            profile.put("profession", profession);
-                            profile.put("about", about);
                             profile.put("privacy", "public");
                             profile.put("Uri", downloadUri != null ? downloadUri.toString() : "");
                             profile.put("uid", currentUserId);
                             profile.put("profile images", "default");
                             profile.put("phoneNo", phoneNo);
                             profile.put("phoneNo2", phoneNo2);
-                            profile.put("address", address);
+                            profile.put("role", role);
 
                             user_member.setmName(mName);
-                            user_member.setSex(sex);
                             user_member.setLocation(location);
-                            user_member.setAddress(address);
-                            user_member.setProfession(profession);
                             user_member.setPhoneNo(phoneNo);
                             user_member.setPhoneNo2(phoneNo2);
-                            user_member.setAbout(about);
                             user_member.setUri(downloadUri.toString());
                             user_member.setUserid(currentUserId);
+                            user_member.setRole(role);
 
                             Log.i("NEW_IMG_URI", user_member.getUri());
 
@@ -275,7 +234,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                                             handler.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Intent intent = new Intent(EditProfileActivity.this,
+                                                    Intent intent = new Intent(EditProfileForEmployer.this,
                                                             MainActivity.class);
                                                     startActivity(intent);
                                                 }
@@ -289,13 +248,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             } else {
 
                 user_member.setmName(mName);
-                user_member.setSex(sex);
                 user_member.setLocation(location);
-                user_member.setAddress(address);
-                user_member.setProfession(profession);
                 user_member.setPhoneNo(phoneNo);
                 user_member.setPhoneNo2(phoneNo2);
-                user_member.setAbout(about);
+                user_member.setRole(role);
 //                user_member.setUrl(downloadUri.toString());
                 user_member.setUserid(currentUserId);
                 Log.i("CURRENT_IMG_URI", user_member.getUri());
@@ -313,7 +269,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Intent intent = new Intent(EditProfileActivity.this,
+                                        Intent intent = new Intent(EditProfileForEmployer.this,
                                                 MainActivity.class);
                                         startActivity(intent);
                                     }

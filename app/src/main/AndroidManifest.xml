@@ -23,6 +23,9 @@
             android:name=".activities.UserProfileActivity"
             android:exported="true"/>
         <activity
+            android:name=".activities.UserProfileForEmployer"
+            android:exported="true"/>
+        <activity
             android:name=".activities.SplashScreen"
             android:exported="true">
             <intent-filter>
@@ -44,10 +47,19 @@
             android:name=".authentication.Registration"
             android:exported="true" />
         <activity
+            android:name=".authentication.PreRegistraton"
+            android:exported="true" />
+        <activity
+            android:name=".authentication.RegistrationForEmployer"
+            android:exported="true" />
+        <activity
             android:name=".authentication.ForgetPassword"
             android:exported="true" />
         <activity
             android:name=".activities.EditProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.EditProfileForEmployer"
             android:exported="true" />
         <activity
             android:name=".location.SeeLocation"
