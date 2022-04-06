@@ -270,8 +270,8 @@
 
         <Button
             android:id="@+id/userProfileSaveBtn"
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/button_background"
             android:text="Save Details"
@@ -287,9 +287,8 @@
         <ProgressBar
             android:id="@+id/userProfileProgressBar"
             style="?android:attr/progressBarStyle"
-            android:layout_width="@dimen/_62sdp"
+            android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -113,20 +113,20 @@
                         android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:layout_height="match_parent">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Videos"
-                            android:textSize="@dimen/_15ssp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="3"
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_15ssp"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:textColor="@color/purple_500"/>
+                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Videos"
+                        android:textSize="@dimen/_15ssp" />
+
+                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_15ssp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:textColor="@color/purple_500"/>
 
                     </LinearLayout>
 
@@ -137,7 +137,7 @@
 
         <LinearLayout
             android:layout_width="@dimen/_300sdp"
-            android:layout_height="@dimen/_300sdp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
 
@@ -267,6 +267,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/aboutText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -285,6 +286,7 @@
                 android:layout_marginStart="@dimen/_60sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_60sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:padding="@dimen/_10sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_10sdp"

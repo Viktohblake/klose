@@ -3,6 +3,7 @@ package com.gridviewimagepicker.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -34,8 +35,11 @@ public class UserProfileActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     LinearLayout linearLayout2;
 
-    LinearLayout addressLinearLayout, locationLinearLayout, phoneLinearLayout, aboutMeLinearLayout,
+    LinearLayout addressLinearLayout, locationLinearLayout, phoneLinearLayout,
             professionLinearLayout, sexLinearLayout;
+
+    TextView aboutMeText;
+    CardView aboutMeCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +72,11 @@ public class UserProfileActivity extends AppCompatActivity {
         addressLinearLayout = findViewById(R.id.addressLinearLayout);
         locationLinearLayout = findViewById(R.id.locationLinearLayout);
         phoneLinearLayout = findViewById(R.id.phoneLinearLayout);
-        aboutMeLinearLayout = findViewById(R.id.aboutMeLinearLayout);
         professionLinearLayout = findViewById(R.id.professionLinearLayout);
         sexLinearLayout = findViewById(R.id.sexLinearLayout);
+
+        aboutMeText = findViewById(R.id.aboutText);
+        aboutMeCardView = findViewById(R.id.aboutTextCardID);
 
         receiverUserId = getIntent().getExtras().get("user_id").toString();
 
@@ -113,6 +119,9 @@ public class UserProfileActivity extends AppCompatActivity {
                     addressLinearLayout.setVisibility(View.GONE);
                     professionLinearLayout.setVisibility(View.GONE);
                     sexLinearLayout.setVisibility(View.GONE);
+
+                    aboutMeText.setVisibility(View.GONE);
+                    aboutMeCardView.setVisibility(View.GONE);
 
                     String name = snapshot.child("mName").getValue().toString();
                     userName.setText(name);
