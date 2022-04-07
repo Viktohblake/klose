@@ -465,7 +465,6 @@
             android:id="@+id/teacherCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
 

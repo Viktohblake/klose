@@ -26,4 +26,9 @@
         <item name="android:tint">#ffffff</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.AppCompat.EditText">
+        <item name="boxStrokeColor">@color/purple_500</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
 </resources>
